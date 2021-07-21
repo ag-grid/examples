@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+FRAMEWORK=$( echo $1 | gsed -n -e 's/-\(react\).*/\1/p' -e 's/-\(angular\).*/\1/p' -e 's/-\(vue\).*/\1/p' -e 's/-\(vanilla\).*/\1/p')
+
+if [ -z $FRAMEWORK ] || ( [ ! $FRAMEWORK == 'angular' ] && [ ! $FRAMEWORK == 'react' ] && [ ! $FRAMEWORK == 'vue' ] && [ ! $FRAMEWORK == 'vanilla' ] ); then 
+    echo 'you must pass a framework flag as a paramater to this script.'
+    echo 'e.g. -angular | -react | -vue | -vanilla'
+    exit 1
+fi
