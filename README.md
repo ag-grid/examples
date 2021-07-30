@@ -60,7 +60,7 @@ source ~/.zshrc
 Clone the project repo from within the project folder
 ```
 cd $T2_HOME
-git clone https://github.com/AhmedAGadir/t2.git .
+git clone https://github.com/ag-grid/examples.git .
 ```
 Make all scripts executable
 ```
