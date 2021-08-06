@@ -51,9 +51,7 @@ let draggedOverNodeHandler = (() => {
 var rowIdSequence = 100;
 
 var leftColumnDefs = [
-  { headerName: 'external drag', width: 140, dndSource: true },
-  { headerName: 'internal drag', width: 140, rowDrag: true },
-  // { field: 'id', dndSource: true, rowDrag: true, },
+  { field: 'id', dndSource: true, rowDrag: true, },
   { field: 'color' },
   { field: 'value1' },
   { field: 'value2' }
