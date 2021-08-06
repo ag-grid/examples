@@ -179,11 +179,9 @@ function gridDrop(event, grid) {
   gridApi.applyTransaction(transaction);
 }
 
-// setup the grid after the page has finished loading
-document.addEventListener('DOMContentLoaded', function () {
-  var leftGridDiv = document.querySelector('#eLeftGrid');
-  new agGrid.Grid(leftGridDiv, leftGridOptions);
+var leftGridDiv = document.querySelector('#eLeftGrid');
+new agGrid.Grid(leftGridDiv, leftGridOptions);
 
-  var rightGridDiv = document.querySelector('#eRightGrid');
-  new agGrid.Grid(rightGridDiv, rightGridOptions);
-});
+var rightGridDiv = document.querySelector('#eRightGrid');
+new agGrid.Grid(rightGridDiv, rightGridOptions);
+
