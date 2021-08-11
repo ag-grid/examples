@@ -1,3 +1,3 @@
 TICKET="test-angular"
 FRAMEWORK="angular"
-DOCS_EXAMPLE=""
+DOCS_EXAMPLE="range-selection"
