@@ -84,16 +84,13 @@ document.querySelector('#exportBtn').addEventListener('click', function () {
   gridOptions.api.exportDataAsExcel();
 });
 
-// setup the grid after the page has finished loading
-document.addEventListener('DOMContentLoaded', function () {
-  var gridDiv = document.querySelector('#myGrid');
-  new agGrid.Grid(gridDiv, gridOptions);
+var gridDiv = document.querySelector('#myGrid');
+new agGrid.Grid(gridDiv, gridOptions);
 
-  agGrid
-    .simpleHttpRequest({
-      url: 'https://www.ag-grid.com/example-assets/olympic-winners.json',
-    })
-    .then(function (data) {
-      gridOptions.api.setRowData(data);
-    });
-});
+agGrid
+  .simpleHttpRequest({
+    url: 'https://www.ag-grid.com/example-assets/olympic-winners.json',
+  })
+  .then(function (data) {
+    gridOptions.api.setRowData(data);
+  });
