@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { RowDropZoneEvents } from 'ag-grid-community/dist/lib/gridBodyComp/rowDragFeature';
+import 'ag-grid-enterprise';
 
 @Component({
 selector: 'app-root',
@@ -69,6 +70,14 @@ alert('Record Dropped!');
 } as RowDropZoneEvents);
 
 this.leftGridApi.addRowDropZone(dropZoneParams);
+}
+
+onRowDragMove(event){
+    console.log(event)
+}
+
+onRowDragEnd(event){
+    console.log(event)
 }
 
 onLeftGridReady(params) {
