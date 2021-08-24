@@ -13,7 +13,14 @@ class Main extends Component {
         columnDefs: [
             //{headerName:"Picture", field:"propno",sortable:false,resizable:true,filter:false,width:140,cellRendererFramework:'imageRenderer'},
             {
-                headerName: "Picture", field: "propno", sortable: false, resizable: true, cellClass: 'cell-wrap-text', autoHeight: true, filter: false, width: 140,
+                headerName: "Picture",
+                field: "propno",
+                sortable: false,
+                resizable: true,
+                cellClass: 'cell-wrap-text',
+                autoHeight: true,
+                filter: false,
+                width: 250,
                 cellRendererFramework: ImageRenderer
             },
             { headerName: "Property", field: "propname", sortable: true, resizable: true, filter: true, width: 200 },
@@ -57,6 +64,10 @@ class Main extends Component {
         this.gridColumnApi = params.columnApi
     }
 
+    // onFirstDataRendered = params => {
+    //     params.columnApi.autoSizeAllColumns();
+    // }
+
     render() {
         return (
             <>
@@ -79,6 +90,7 @@ class Main extends Component {
                         enableRangeSelection={false}
                         //statusBar={stdStatusBar}
                         modules={AllModules}
+                    // onFirstDataRendered={this.onFirstDataRendered}
                     >
                     </AgGridReact>
                 </Container>
