@@ -50,16 +50,13 @@ function onFirstDataRendered(params) {
   }, 0);
 }
 
-// setup the grid after the page has finished loading
-document.addEventListener('DOMContentLoaded', function () {
-  var gridDiv = document.querySelector('#myGrid');
-  new agGrid.Grid(gridDiv, gridOptions);
+var gridDiv = document.querySelector('#myGrid');
+new agGrid.Grid(gridDiv, gridOptions);
 
-  agGrid
-    .simpleHttpRequest({
-      url: 'https://www.ag-grid.com/example-assets/master-detail-data.json',
-    })
-    .then(function (data) {
-      gridOptions.api.setRowData(data);
-    });
-});
+agGrid
+  .simpleHttpRequest({
+    url: 'https://www.ag-grid.com/example-assets/master-detail-data.json',
+  })
+  .then(function (data) {
+    gridOptions.api.setRowData(data);
+  });
