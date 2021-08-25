@@ -1,0 +1,20 @@
+.ag-cell[col-id="name"] .ag-group-value {
+    order: 1;
+    flex: 1;
+}
+
+.ag-cell[col-id="name"] .ag-group-child-count {
+    order: 2;
+}
+
+.ag-cell[col-id="name"] .ag-group-checkbox {
+    order: 3;
+}
+
+.ag-cell[col-id="name"] .ag-group-expanded {
+    order: 4;
+}
+
+.ag-cell[col-id="name"] .ag-group-contracted {
+    order: 5;
+}
