@@ -1,95 +1,54 @@
 import { Component } from "@angular/core";
 import "ag-grid-enterprise";
 import { HttpClient } from "@angular/common/http";
-
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+import { GridOptions } from "ag-grid-community";
 @Component({
   selector: "my-app",
   template: `<ag-grid-angular
-    #agGrid
     style="width: 90%; height: 500px;"
     id="myGrid"
     class="ag-theme-alpine"
-    [columnDefs]="columnDefs"
-    [defaultColDef]="defaultColDef"
-    [enableRangeSelection]="true"
-    [rowData]="rowData"
-    (gridReady)="onGridReady($event)"
+    [gridOptions]="gridOptionsFactory()"
   ></ag-grid-angular>
   <ag-grid-angular
-    #agGrid1
-    style="width: 90%; height: 500px;"
-    id="myGrid1"
-    class="ag-theme-alpine"
-    [columnDefs]="columnDefs"
-    [defaultColDef]="defaultColDef"
-    [enableRangeSelection]="true"
-    [rowData]="rowData"
-    (gridReady)="onGridReady($event)"
-  ></ag-grid-angular>
-  <ag-grid-angular
-    #agGrid2
     style="width: 90%; height: 500px;"
     id="myGrid2"
     class="ag-theme-alpine"
-    [columnDefs]="columnDefs"
-    [defaultColDef]="defaultColDef"
-    [enableRangeSelection]="true"
-    [rowData]="rowData"
-    (gridReady)="onGridReady($event)"
+    [gridOptions]="gridOptionsFactory()"
+  ></ag-grid-angular>
+  <ag-grid-angular
+    style="width: 90%; height: 500px;"
+    id="myGrid3"
+    class="ag-theme-alpine"
+    [gridOptions]="gridOptionsFactory()"
   ></ag-grid-angular>`
 })
 export class AppComponent {
   public gridApi: any;
   public gridColumnApi: any;
   public columnDefs: any;
-  public defaultColDef: any;
   public rowData: any;
 
   constructor(private http: HttpClient) {
     this.columnDefs = [
-      {
-        field: "athlete",
-        minWidth: 150
-      },
-      {
-        field: "age",
-        maxWidth: 90
-      },
-      {
-        field: "country",
-        minWidth: 150
-      },
-      {
-        field: "year",
-        maxWidth: 90
-      },
-      {
-        field: "date",
-        minWidth: 150
-      },
-      {
-        field: "sport",
-        minWidth: 150
-      },
-      { field: "gold" },
-      { field: "silver" },
-      { field: "bronze" },
-      { field: "total" }
+      { field: "make" },
+      { field: "model" },
+      { field: "price" },
     ];
-    this.defaultColDef = {
-      flex: 1,
-      minWidth: 100
-    };
+    this.rowData = [
+      { make: "Toyota", model: "Celica", price: 35000 },
+      { make: "Ford", model: "Mondeo", price: 32000 },
+      { make: "Porsche", model: "Boxter", price: 72000 },
+    ]
   }
 
-  onGridReady(params: { api: any; columnApi: any }) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-
-    this.http.get("https://www.ag-grid.com/example-assets/olympic-winners.json").subscribe((data) => {
-      this.rowData = data;
-    });
+  gridOptionsFactory():GridOptions  {
+    return {
+      columnDefs: this.columnDefs,
+      rowData: this.rowData
+    }
   }
+
 }
