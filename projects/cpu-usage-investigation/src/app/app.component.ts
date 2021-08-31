@@ -11,18 +11,6 @@ import { GridOptions } from "ag-grid-community";
     id="myGrid"
     class="ag-theme-alpine"
     [gridOptions]="gridOptionsFactory()"
-  ></ag-grid-angular>
-  <ag-grid-angular
-    style="width: 90%; height: 500px;"
-    id="myGrid2"
-    class="ag-theme-alpine"
-    [gridOptions]="gridOptionsFactory()"
-  ></ag-grid-angular>
-  <ag-grid-angular
-    style="width: 90%; height: 500px;"
-    id="myGrid3"
-    class="ag-theme-alpine"
-    [gridOptions]="gridOptionsFactory()"
   ></ag-grid-angular>`
 })
 export class AppComponent {
