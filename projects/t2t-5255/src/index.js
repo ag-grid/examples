@@ -19,12 +19,6 @@ var gridOptions = {
   autoGroupColumnDef: {
     field: 'employeeName',
     cellRenderer: CustomGroupRenderer,
-    // cellRendererParams: {
-    //   innerRenderer: function (params) {
-    //     // display employeeName rather than group key (employeeId)
-    //     return params.data.employeeName;
-    //   },
-    // },
   },
   rowModelType: 'serverSide',
   serverSideStoreType: 'partial',
