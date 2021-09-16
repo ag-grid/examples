@@ -47,20 +47,18 @@ var gridOptions = {
 };
 
 // setup the grid after the page has finished loading
-document.addEventListener('DOMContentLoaded', function () {
-  var gridDiv = document.querySelector('#myGrid');
-  new agGrid.Grid(gridDiv, gridOptions);
+var gridDiv = document.querySelector('#myGrid');
+new agGrid.Grid(gridDiv, gridOptions);
 
-  agGrid
-    .simpleHttpRequest({
-      url: 'https://www.ag-grid.com/example-assets/small-tree-data.json',
-    })
-    .then(function (data) {
-      var fakeServer = createFakeServer(data);
-      var datasource = createServerSideDatasource(fakeServer);
-      gridOptions.api.setServerSideDatasource(datasource);
-    });
-});
+agGrid
+  .simpleHttpRequest({
+    url: 'https://www.ag-grid.com/example-assets/small-tree-data.json',
+  })
+  .then(function (data) {
+    var fakeServer = createFakeServer(data);
+    var datasource = createServerSideDatasource(fakeServer);
+    gridOptions.api.setServerSideDatasource(datasource);
+  });
 
 function createFakeServer(fakeServerData) {
   function FakeServer(allData) {
