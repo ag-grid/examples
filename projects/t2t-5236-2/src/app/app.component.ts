@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-
+import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 // import rowData from './rowData';
 
 import { ToggleSwitchRenderer } from './toggle-switch-renderer.component';
