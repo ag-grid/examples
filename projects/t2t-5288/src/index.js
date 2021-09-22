@@ -38,10 +38,12 @@ var gridOptions = {
   defaultColDef: {
     flex: 1,
     minWidth: 100,
+    sortable: true
   },
   autoGroupColumnDef: {
     minWidth: 200
-  }
+  },
+  sideBar: true
 };
 
 
