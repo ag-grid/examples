@@ -40,7 +40,8 @@ var gridOptions = {
     sortable: true
   },
   autoGroupColumnDef: {
-    minWidth: 200
+    minWidth: 200,
+    field: 'athlete'
   },
   sideBar: true
 };
