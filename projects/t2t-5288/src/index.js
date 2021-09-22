@@ -41,7 +41,6 @@ var gridOptions = {
   },
   autoGroupColumnDef: {
     minWidth: 200,
-    field: 'athlete'
   },
   sideBar: true
 };
