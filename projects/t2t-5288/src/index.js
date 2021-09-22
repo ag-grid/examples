@@ -55,8 +55,6 @@ agGrid
     url: 'https://www.ag-grid.com/example-assets/olympic-winners.json',
   })
   .then(function (data) {
-    data = data.slice(0, 100);
-
     let sortedData = data.sort((a, b) => b.total - a.total);
 
     let i = 0;
