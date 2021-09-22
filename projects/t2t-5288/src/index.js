@@ -3,6 +3,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import * as agGrid from "ag-grid-community";
 
+// the 10 athletes with the most medals
 let top10Athletes = [];
 
 var gridOptions = {
@@ -24,6 +25,7 @@ var gridOptions = {
       },
       minWidth: 150
     },
+    { field: 'total', aggFunc: 'sum', minWidth: 150 },
     { field: 'age', maxWidth: 90 },
     { field: 'country', minWidth: 150 },
     { field: 'year', maxWidth: 90 },
@@ -32,7 +34,6 @@ var gridOptions = {
     { field: 'gold' },
     { field: 'silver' },
     { field: 'bronze' },
-    { field: 'total' },
   ],
   defaultColDef: {
     flex: 1,
