@@ -9,14 +9,13 @@ let top10Athletes = [];
 var gridOptions = {
   columnDefs: [
     {
-      field: 'athlete',
       rowGroup: true,
       hide: true,
       valueGetter: params => {
         if (params.node.group) {
           return params.node.key;
         }
-        let cellValue = params.data[params.column.colId];
+        let cellValue = params.data.athlete;
         if (top10Athletes.includes(cellValue)) {
           return cellValue;
         } else {
