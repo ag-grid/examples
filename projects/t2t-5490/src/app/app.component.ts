@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import { MenuItemDef } from 'ag-grid-community';
 
 @Component({
   selector: 'my-app',
@@ -26,7 +27,7 @@ export class AppComponent {
   public columnDefs;
   public defaultColDef;
   public postProcessPopup;
-  public rowData: any;
+  public rowData: [];
 
   constructor(public http: HttpClient) {
     this.columnDefs = [
@@ -89,7 +90,7 @@ export class AppComponent {
     this.http
       .get('https://www.ag-grid.com/example-assets/olympic-winners.json')
       .subscribe((data) => {
-        this.rowData = data;
+        this.rowData = (data as []);
       });
   }
 
@@ -153,11 +154,11 @@ export class AppComponent {
           'resetColumns',
         ];
       case 'country':
-        var countryMenuItems: any[] = [];
+        var countryMenuItems: (string | MenuItemDef)[] = [];
         var itemsToExclude = ['separator', 'pinSubMenu', 'valueAggSubMenu'];
-        params.defaultItems.forEach(function (item) {
-          if (itemsToExclude.indexOf(item) < 0) {
-            countryMenuItems.push(item);
+        params.defaultItems.forEach(function (item: string | MenuItemDef) {
+          if (itemsToExclude.indexOf(item as string) < 0) {
+            countryMenuItems.push((item));
           }
         });
         return countryMenuItems;
