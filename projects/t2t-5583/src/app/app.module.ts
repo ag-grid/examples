@@ -6,15 +6,16 @@ import { HttpClientModule } from '@angular/common/http';
 // ag-grid
 import { AgGridModule } from 'ag-grid-angular';
 import { AppComponent } from './app.component';
+import { CustomHeader } from './custom-header.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([CustomHeader]),
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, CustomHeader],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

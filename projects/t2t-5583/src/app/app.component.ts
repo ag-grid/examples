@@ -4,6 +4,7 @@ import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
+import { CustomHeader } from './custom-header.component';
 @Component({
   selector: 'my-app',
   template: `<ag-grid-angular
@@ -12,9 +13,10 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
     id="myGrid"
     class="ag-theme-alpine"
     [columnDefs]="columnDefs"
-    [defaultColDef]="defaultColDef"
-    [enableRangeSelection]="true"
     [rowData]="rowData"
+    [suppressMenuHide]="true"
+    [frameworkComponents]="frameworkComponents"
+    [defaultColDef]="defaultColDef"
     (gridReady)="onGridReady($event)"
   ></ag-grid-angular>`,
 })
@@ -25,41 +27,65 @@ export class AppComponent {
   public columnDefs;
   public defaultColDef;
   public rowData: any;
+  frameworkComponents
 
   constructor(public http: HttpClient) {
     this.columnDefs = [
       {
         field: 'athlete',
-        minWidth: 150,
+        suppressMenu: true,
+        minWidth: 120,
       },
       {
         field: 'age',
-        maxWidth: 90,
+        sortable: false,
+        headerComponentParams: { menuIcon: 'fa-external-link-alt' },
       },
       {
         field: 'country',
-        minWidth: 150,
+        suppressMenu: true,
+        minWidth: 120,
       },
       {
         field: 'year',
-        maxWidth: 90,
+        sortable: false,
       },
       {
         field: 'date',
-        minWidth: 150,
+        suppressMenu: true,
       },
       {
         field: 'sport',
-        minWidth: 150,
+        sortable: false,
       },
-      { field: 'gold' },
-      { field: 'silver' },
-      { field: 'bronze' },
-      { field: 'total' },
+      {
+        field: 'gold',
+        headerComponentParams: { menuIcon: 'fa-cog' },
+        minWidth: 120,
+      },
+      {
+        field: 'silver',
+        sortable: false,
+      },
+      {
+        field: 'bronze',
+        suppressMenu: true,
+        minWidth: 120,
+      },
+      {
+        field: 'total',
+        sortable: false,
+      },
     ];
+    this.frameworkComponents = { agColumnHeader: CustomHeader };
     this.defaultColDef = {
+      editable: true,
+      sortable: true,
       flex: 1,
       minWidth: 100,
+      filter: true,
+      resizable: true,
+      headerComponentParams: { menuIcon: 'fa-bars' },
     };
   }
 
