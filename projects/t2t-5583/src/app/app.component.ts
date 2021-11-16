@@ -32,6 +32,7 @@ export class AppComponent {
   constructor(public http: HttpClient) {
     this.columnDefs = [
       {
+        headerCheckboxSelection: true,
         field: 'athlete',
         suppressMenu: true,
         minWidth: 120,
