@@ -1,8 +1,12 @@
 import Vue from 'vue';
-import { AgGridVue } from 'ag-grid-vue';
-import 'ag-grid-enterprise';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import { AgGridVue } from '@ag-grid-community/vue';
+
+import '@ag-grid-community/core/dist/styles/ag-grid.css';
+import '@ag-grid-community/core/dist/styles/ag-theme-alpine.css';
+import { MenuModule } from '@ag-grid-enterprise/menu';
+import { SetFilterModule } from '@ag-grid-enterprise/set-filter';
+import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
+import { AllCommunityModules } from '@ag-grid-community/all-modules';
 
 const VueExample = {
   template: `
@@ -15,6 +19,8 @@ const VueExample = {
                 @grid-ready="onGridReady"
                 :defaultColDef="defaultColDef"
                 :enableRangeSelection="true"
+                :modules="modules"
+                :sideBar="sideBar"
                 :rowData="rowData"></ag-grid-vue>
         </div>
     `,
@@ -24,16 +30,28 @@ const VueExample = {
   data: function () {
     return {
       columnDefs: [
-        { field: 'athlete', minWidth: 150 },
-        { field: 'age', maxWidth: 90 },
-        { field: 'country', minWidth: 150 },
-        { field: 'year', maxWidth: 90 },
-        { field: 'date', minWidth: 150 },
-        { field: 'sport', minWidth: 150 },
-        { field: 'gold' },
-        { field: 'silver' },
-        { field: 'bronze' },
-        { field: 'total' },
+        {
+          headerName: 'Athlete',
+          children: [
+            { field: 'athlete', filter: 'agTextColumnFilter', minWidth: 200 },
+            { field: 'age' },
+            { field: 'country', minWidth: 200 },
+          ],
+        },
+        {
+          headerName: 'Competition',
+          children: [{ field: 'year' }, { field: 'date', minWidth: 180 }],
+        },
+        { field: 'sport', minWidth: 200 },
+        {
+          headerName: 'Medals',
+          children: [
+            { field: 'gold' },
+            { field: 'silver' },
+            { field: 'bronze' },
+            { field: 'total' },
+          ],
+        },
       ],
       gridApi: null,
       columnApi: null,
@@ -42,9 +60,13 @@ const VueExample = {
         minWidth: 100,
       },
       rowData: null,
+      sideBar: null,
+      modules: [...AllCommunityModules, SetFilterModule, MenuModule, ColumnsToolPanelModule]
     };
   },
-  beforeMount() {},
+  beforeMount() {
+    this.sideBar = 'columns';
+  },
   methods: {
     onGridReady(params) {
       this.gridApi = params.api;
