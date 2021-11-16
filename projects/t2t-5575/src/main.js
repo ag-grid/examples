@@ -6,7 +6,7 @@ import '@ag-grid-community/core/dist/styles/ag-theme-alpine.css';
 import { MenuModule } from '@ag-grid-enterprise/menu';
 import { SetFilterModule } from '@ag-grid-enterprise/set-filter';
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
-import { AllCommunityModules } from '@ag-grid-community/all-modules';
+import { ClientSideRowModelModule } from '@ag-grid-community/all-modules';
 
 const VueExample = {
   template: `
@@ -33,14 +33,21 @@ const VueExample = {
         {
           headerName: 'Athlete',
           children: [
-            { field: 'athlete', filter: 'agTextColumnFilter', minWidth: 200 },
+            {
+              field: 'athlete',
+              filter: 'agTextColumnFilter',
+              minWidth: 200,
+            },
             { field: 'age' },
             { field: 'country', minWidth: 200 },
           ],
         },
         {
           headerName: 'Competition',
-          children: [{ field: 'year' }, { field: 'date', minWidth: 180 }],
+          children: [
+            { field: 'year' },
+            { field: 'date', minWidth: 180 },
+          ],
         },
         { field: 'sport', minWidth: 200 },
         {
@@ -58,10 +65,20 @@ const VueExample = {
       defaultColDef: {
         flex: 1,
         minWidth: 100,
+        enableValue: true,
+        enableRowGroup: true,
+        enablePivot: true,
+        sortable: true,
+        filter: true,
       },
-      rowData: null,
       sideBar: null,
-      modules: [...AllCommunityModules, SetFilterModule, MenuModule, ColumnsToolPanelModule]
+      modules: [
+        ClientSideRowModelModule,
+        MenuModule,
+        SetFilterModule,
+        ColumnsToolPanelModule,
+      ],
+      rowData: null,
     };
   },
   beforeMount() {
