@@ -21,37 +21,51 @@ const App = () => {
     )
   }, [])
 
-
-
   const columnDefs = [
     {
       field: "athlete",
-      minWidth: 150,
     },
     {
       field: 'age',
-      maxWidth: 90,
     },
     {
       field: 'country',
-      minWidth: 150,
     },
     {
       field: 'year',
-      maxWidth: 90,
     },
     {
       field: 'date',
-      minWidth: 150,
     },
     {
       field: 'sport',
-      minWidth: 150,
     },
     { field: 'gold', cellRendererFramework: MedalCellRenderer },
     { field: 'silver', cellRendererFramework: MedalCellRenderer},
     { field: 'bronze', cellRendererFramework: MedalCellRenderer },
     { field: 'total', cellRendererFramework: MedalCellRenderer },
+    {
+      field: "athlete",
+    },
+    { field: 'gold', cellRendererFramework: MedalCellRenderer },
+    { field: 'silver', cellRendererFramework: MedalCellRenderer},
+    { field: 'bronze', cellRendererFramework: MedalCellRenderer },
+    { field: 'total', cellRendererFramework: MedalCellRenderer },
+    {
+      field: 'age',
+    },
+    {
+      field: 'country',
+    },
+    {
+      field: 'year',
+    },
+    {
+      field: 'date',
+    },
+    {
+      field: 'sport',
+    },
   ];
 
   const defaultColDef = {
