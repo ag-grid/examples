@@ -97,7 +97,7 @@ export class AppComponent {
   getMainMenuItems(params) {
     switch (params.column.getId()) {
       case 'athlete':
-        var athleteMenuItems = params.defaultItems.slice(0);
+        const athleteMenuItems: (MenuItemDef | string)[] = params.defaultItems.slice(0)
         athleteMenuItems.push({
           name: 'AG Grid Is Great',
           action: function () {

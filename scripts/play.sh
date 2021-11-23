@@ -3,6 +3,14 @@
 # foo
 echo "hello moto"
 
+node $T2_HOME/scripts/helpers/play.js
+
+# open $T2_HOME/scripts/helpers/create-plunker.html
+
+
+# # =======================
+# =======================
+
 # node $T2_HOME/scripts/helpers/create-plunker.js
 
 
@@ -43,8 +51,3 @@ echo "hello moto"
 # echo $output
 
 # echo $output >> files.json
-
-# # =======================
-# =======================
-
-node $T2_HOME/scripts/helpers/play.js
