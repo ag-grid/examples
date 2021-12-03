@@ -5,6 +5,10 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import './App.css';
 
+import {LicenseManager} from 'ag-grid-enterprise';
+LicenseManager.setLicenseKey('CompanyName=HERMES INTERNATIONAL,LicensedApplication=HERMES DIGITAL BO 1,LicenseType=SingleApplication,LicensedConcurrentDeveloperCount=1,LicensedProductionInstancesCount=0,AssetReference=AG-021408,ExpiryDate=22_October_2022_[v2]_MTY2NjM5MzIwMDAwMA==6c0ebe050fe6ab7d2249bf5c36bf1f7d')
+
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -12,61 +16,29 @@ export default class App extends Component {
     this.state = {
       columnDefs: [
         {
-          field: 'athlete',
-          minWidth: 150,
+          field: 'make',
         },
         {
-          field: 'age',
-          maxWidth: 90,
+          field: 'model',
         },
         {
-          field: 'country',
-          minWidth: 150,
-        },
-        {
-          field: 'year',
-          maxWidth: 90,
-        },
-        {
-          field: 'date',
-          minWidth: 150,
-        },
-        {
-          field: 'sport',
-          minWidth: 150,
-        },
-        { field: 'gold' },
-        { field: 'silver' },
-        { field: 'bronze' },
-        { field: 'total' },
-      ],
+          field: 'price',
+        },],
       defaultColDef: {
         flex: 1,
         minWidth: 100,
       },
-      rowData: null,
+      rowData: [
+        {make: "Toyota", model: "Celica", price: 35000},
+        {make: "Ford", model: "Mondeo", price: 32000},
+        {make: "Porsche", model: "Boxter", price: 72000}
+    ],
     };
   }
 
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-
-    const httpRequest = new XMLHttpRequest();
-    const updateData = (data) => {
-      this.setState({ rowData: data });
-    };
-
-    httpRequest.open(
-      'GET',
-      'https://www.ag-grid.com/example-assets/olympic-winners.json'
-    );
-    httpRequest.send();
-    httpRequest.onreadystatechange = () => {
-      if (httpRequest.readyState === 4 && httpRequest.status === 200) {
-        updateData(JSON.parse(httpRequest.responseText));
-      }
-    };
   };
 
   render() {
