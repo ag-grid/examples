@@ -133,18 +133,39 @@ var htmlContent = `
 
 fs.writeFile('my-page.html', htmlContent, (error) => { /* handle error */ });
 
-
+// create server to open up the created file
 const http = require('http')
-// const fs = require('fs')
-
 const server = http.createServer((req, res) => {
     res.writeHead(200, { 'content-type': 'text/html' })
     fs.createReadStream('my-page.html').pipe(res)
 })
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`launched a server at port ${PORT}`);
+})
 
-server.listen(process.env.PORT || 3000)
+// open browser
+var url = 'http://localhost:3000';
+var start = (process.platform == 'darwin' ? 'open' : process.platform == 'win32' ? 'start' : 'xdg-open');
+require('child_process').exec(start + ' ' + url);
 
-const open = require('open');
+// close server
+// server.close(function () { console.log('Server closed!'); });
+// server.emit('close')
+
+// delete the created file
+// fs.unlink('my-page.html', htmlContent, (error) => { /* handle error */ });
+setTimeout(() => {
+    const path = './my-page.html';
+    try {
+        fs.unlinkSync(path)
+        //file removed
+    } catch (err) {
+        console.error(err)
+    }
+}, 2000);
+
+// const open = require('open');
 
 // open('https://localhost:3000')
 
