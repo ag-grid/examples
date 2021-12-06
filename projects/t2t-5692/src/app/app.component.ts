@@ -1,73 +1,92 @@
-import { Component } from "@angular/core";
-import "ag-grid-enterprise";
-import { HttpClient } from "@angular/common/http";
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import 'ag-grid-enterprise';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 @Component({
-  selector: "my-app",
+  selector: 'my-app',
   template: `<ag-grid-angular
     #agGrid
-    style="width: 90%; height: 500px;"
+    style="width: 100%; height: 100%;"
     id="myGrid"
     class="ag-theme-alpine"
     [columnDefs]="columnDefs"
     [defaultColDef]="defaultColDef"
-    [enableRangeSelection]="true"
+    [rowHeight]="rowHeight"
     [rowData]="rowData"
     (gridReady)="onGridReady($event)"
-  ></ag-grid-angular>`
+  ></ag-grid-angular>`,
 })
 export class AppComponent {
-  public gridApi: any;
-  public gridColumnApi: any;
-  public columnDefs: any;
-  public defaultColDef: any;
-  public rowData: any;
+  public gridApi;
+  public gridColumnApi;
 
-  constructor(private http: HttpClient) {
+  public columnDefs;
+  public defaultColDef;
+  public rowData: any;
+  public rowHeight;
+
+  constructor(public http: HttpClient) {
     this.columnDefs = [
       {
-        field: "athlete",
-        minWidth: 150
+        headerName: 'Row #',
+        field: 'rowNumber',
+        width: 120,
       },
       {
-        field: "age",
-        maxWidth: 90
+        field: 'autoA',
+        width: 300,
+        wrapText: true,
+        autoHeight: true,
+        headerName: 'A) Auto Height',
       },
       {
-        field: "country",
-        minWidth: 150
+        width: 300,
+        field: 'autoB',
+        wrapText: true,
+        headerName: 'B) Normal Height',
       },
-      {
-        field: "year",
-        maxWidth: 90
-      },
-      {
-        field: "date",
-        minWidth: 150
-      },
-      {
-        field: "sport",
-        minWidth: 150
-      },
-      { field: "gold" },
-      { field: "silver" },
-      { field: "bronze" },
-      { field: "total" }
     ];
     this.defaultColDef = {
-      flex: 1,
-      minWidth: 100
+      sortable: true,
+      resizable: true,
     };
+    this.rowHeight = 150;
   }
 
-  onGridReady(params: { api: any; columnApi: any }) {
+  onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    this.http.get("https://www.ag-grid.com/example-assets/olympic-winners.json").subscribe((data) => {
-      this.rowData = data;
-    });
+    setTimeout(function () {
+      params.api.setRowData(createRowData());
+    }, 500);
   }
+}
+
+function createRowData() {
+  var latinSentence =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu.';
+  var latinWords = latinSentence.split(' ');
+  var rowData: any = [];
+  function generateRandomSentence(row, col) {
+    var wordCount = ((row + 1) * (col + 1) * 733 * 19) % latinWords.length;
+    var parts: any = [];
+    for (var i = 0; i < wordCount; i++) {
+      parts.push(latinWords[i]);
+    }
+    var sentence = parts.join(' ');
+    return sentence + '.';
+  }
+  for (var i = 0; i < 100; i++) {
+    var item = {
+      rowNumber: 'Row ' + i,
+      autoA: generateRandomSentence(i, 1),
+      autoB: generateRandomSentence(i, 2),
+      autoC: generateRandomSentence(i, 3),
+    };
+    rowData.push(item);
+  }
+  return rowData;
 }

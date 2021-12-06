@@ -1,3 +1,3 @@
 TICKET="t2t-5692"
 FRAMEWORK="angular"
-DOCS_EXAMPLE=""
+DOCS_EXAMPLE="range-selection"
