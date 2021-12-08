@@ -289,9 +289,7 @@ function onError(err) {
                 .catch(err => console.log(err));
             };
 
-            setTimeout(() => {
-                submitForm()
-            },5000)
+            submitForm()
 
         </script>
     </body>
