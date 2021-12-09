@@ -5,7 +5,7 @@ echo "hello moto"
 
 
 # open $T2_HOME/scripts/helpers/create-plunker.html
-node $T2_HOME/scripts/helpers/play.js
+node $T2_HOME/scripts/t2-create-plunker.js
 
 # open './my-page.html'
 
