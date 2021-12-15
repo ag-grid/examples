@@ -4,6 +4,30 @@ const fsPromise = require("fs").promises;
 const fs = require("fs");
 const path = require('path');
 
+const TO_IGNORE = {
+    directories: [
+        // GENERAL
+        'node_modules'
+    ],
+    files: [
+        // GENERAL
+        'package-lock.json',
+        'yarn.lock',
+        'README.md',
+        'ag-grid.config.sh',
+        'favicon.ico',
+        // REACT
+        'logo.svg',
+        'logo192.png',
+        'logo512.png',
+        'App.test.js',
+        'reportWebVitals.js',
+        'setupTests.js',
+        'robots.txt',
+        'manifest.json'
+    ]
+};
+
 // returns a promise which resolves to an array for file names for a directory
 let getFilenames = (dirname) => fsPromise.readdir(dirname, function (err, filenames) {
     if (err) {
@@ -32,18 +56,27 @@ async function readFiles(dirname, result = {}) {
 
         if (isDir) {
 
-            await readFiles(path_string + '/', result);
+            if (!TO_IGNORE.directories.includes(filename)) {
+
+                await readFiles(path_string + '/', result);
+
+            }
 
         } else {
 
-            let fileContent = await getFileContent(path_string);
+            if (!TO_IGNORE.files.includes(filename)) {
 
-            let relativePathToFile = path.relative(process.cwd(), path_string);
+                let fileContent = await getFileContent(path_string);
 
-            result[relativePathToFile] = {
-                source: fileContent,
-                isFramework: false
+                let relativePathToFile = path.relative(process.cwd(), path_string);
+
+                result[relativePathToFile] = {
+                    source: fileContent,
+                    isFramework: false
+                }
+
             }
+
         }
 
     }
@@ -74,8 +107,8 @@ async function readFiles(dirname, result = {}) {
                 const title = 'Range selection test';
 
                 getExampleFiles().then((files) => {
-                    console.log('exampleFiles', files);
                     files = JSON.parse(files);
+                    console.log('exampleFiles', files);
                     const form = document.createElement('form');
                     form.method = 'post';
                     form.style.display = 'none';
@@ -134,8 +167,11 @@ async function readFiles(dirname, result = {}) {
         require('child_process').exec(start + ' ' + url);
 
         // close server
-        // server.close(function () { console.log('Server closed!'); });
-        // server.emit('close')
+        // doesn't work
+        // setTimeout(() => {
+        //     server.close(function () { console.log('Server closed!'); });
+        //     server.emit('close')
+        // }, 3000);
 
         // delete the created file
         // fs.unlink('my-page.html', htmlContent, (error) => { /* handle error */ });
