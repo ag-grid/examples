@@ -52,7 +52,7 @@ const onRowGroupOpened = params =>{
         onChange={() => {
           setReactUi(!reactUi);
         }}
-      ></input>Toggle ReactUi</label>
+      ></input>Toggle Suppress ReactUi</label>
       <div
         id="myGrid"
         style={{
