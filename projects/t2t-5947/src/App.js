@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { render } from 'react-dom';
-import { AgGridReact, AgGridColumn } from 'ag-grid-react';
-import 'ag-grid-enterprise';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
+import {MasterDetailModule} from '@ag-grid-enterprise/master-detail';
+import {ClientSideRowModelModule} from '@ag-grid-community/client-side-row-model';
+
+import '@ag-grid-community/core/dist/styles/ag-grid.css';
+import '@ag-grid-community/core/dist/styles/ag-theme-alpine.css';
 
 const DetailCellRenderer = () => (
   <h1 style={{ padding: "20px" }}>My Custom Detail</h1>
@@ -62,12 +63,13 @@ const onRowGroupOpened = params =>{
       >
         <AgGridReact
           masterDetail={true}
+          modules={[ClientSideRowModelModule, MasterDetailModule]}
           detailCellRenderer={'myDetailCellRenderer'}
-          frameworkComponents={{ myDetailCellRenderer: DetailCellRenderer }}
+          components={{ myDetailCellRenderer: DetailCellRenderer }}
           onRowGroupOpened={onRowGroupOpened}
           onGridReady={onGridReady}
           rowData={rowData}
-          reactUi={reactUi}
+          suppressReactUi={reactUi}
         >
           <AgGridColumn
             field="athlete"
