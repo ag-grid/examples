@@ -1,3 +1,0 @@
-TICKET="t2t-5675"
-FRAMEWORK="react"
-DOCS_EXAMPLE=""
