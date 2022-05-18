@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-cd $T2_HOME
-
-source "scripts/helpers/script_requires_framework_as_param"
-
-echo "updating [$FRAMEWORK] project in cache..."
-
-source "scripts/helpers/init-cache" -$FRAMEWORK
