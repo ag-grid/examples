@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+source "$T2_SCRIPTS/helpers/colours.sh"
+source "$T2_SCRIPTS/helpers/script_requires_project_name_as_param.sh" $1
+cd $T2_HOME
+
+# to lowercase
+PROJECT_NAME=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+echo -e "Creating $FRAMEWORK project ${CYAN}[$PROJECT_NAME]${NOCOLOR}..."
+
+CACHED_PROJECT_DIR_PATH="$T2_HOME/cache/cached-$FRAMEWORK"
+NEW_PROJECT_DIR_PATH="$T2_HOME/projects/$PROJECT_NAME"
+
+# move project contents from t2/cache into t2/projects folder
+mkdir $NEW_PROJECT_DIR_PATH
+mv $CACHED_PROJECT_DIR_PATH/* $NEW_PROJECT_DIR_PATH/
+
+# update ag-grid.config file
+gsed -i "s/TICKET=.*/TICKET=\"$PROJECT_NAME\"/" $NEW_PROJECT_DIR_PATH/ag-grid.config.sh
+
+# https://fsymbols.com/generators/carty/
+# https://fsymbols.com/text-art/
+echo ""
+echo -e "${GREEN}░██████╗░██████╗░██╗██████╗░  ██████╗░███████╗░█████╗░██████╗░██╗░░░██╗"
+echo -e "██╔════╝░██╔══██╗██║██╔══██╗  ██╔══██╗██╔════╝██╔══██╗██╔══██╗╚██╗░██╔╝"
+echo -e "██║░░██╗░██████╔╝██║██║░░██║  ██████╔╝█████╗░░███████║██║░░██║░╚████╔╝░"
+echo -e "██║░░╚██╗██╔══██╗██║██║░░██║  ██╔══██╗██╔══╝░░██╔══██║██║░░██║░░╚██╔╝░░"
+echo -e "╚██████╔╝██║░░██║██║██████╔╝  ██║░░██║███████╗██║░░██║██████╔╝░░░██║░░░"
+echo -e "░╚═════╝░╚═╝░░╚═╝╚═╝╚═════╝░  ╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝╚═════╝░░░░╚═╝░░░${NOCOLOR}"
+echo -e ""
+echo -e "Project created at: $NEW_PROJECT_DIR_PATH"
+echo ""
+
+if [ -n $MY_EDITOR ]; then
+    # open in text editor
+    $MY_EDITOR $NEW_PROJECT_DIR_PATH  
+fi
+
+# update cache in foreground
+source "scripts/t2-update-cache" -$FRAMEWORK
