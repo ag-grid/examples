@@ -15,4 +15,9 @@ fi
 
 source "./ag-grid.config.sh"
 cd $T2_PROJECTS_DIR_PATH
-rm -r "$T2_PROJECTS_DIR_PATH/$TICKET"
+
+# remove file completely
+# rm -r "$T2_PROJECTS_DIR_PATH/$TICKET"
+
+# or move to ~/.Trash
+mv "$T2_PROJECTS_DIR_PATH/$TICKET" ~/.Trash
