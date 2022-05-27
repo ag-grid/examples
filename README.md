@@ -95,10 +95,10 @@ and then follow the steps from the top of this guide.
 To create a project choose on of the following depending on the FW you want to use:
 
 ```
-t2-get -react [name]
-t2-get -angular [name]
-t2-get -vue [name]
-t2-get -vanilla [name]
+t2-create-react [name]
+t2-create-angular [name]
+t2-create-vue [name]
+t2-create-vanilla [name]
 ```
 This will create a new project in the `~/t2-home/projects/[name]` that you can immediately open and begin using. The script will then update the cached project for whichever framework the project was created in.
 
