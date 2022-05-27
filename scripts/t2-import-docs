@@ -27,7 +27,7 @@ then
 fi
 
 # select a docs example to import
-DOCUMENATION_EXAMPLES="range-selection row-grouping server-side-row-model tree-data"
+DOCUMENATION_EXAMPLES="range-selection row-grouping server-side-row-model tree-data master-detail master-detail-custom-detail-grid"
 
 PS3="Select an AG Grid Docs Example: "
 

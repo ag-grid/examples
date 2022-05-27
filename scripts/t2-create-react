@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+FRAMEWORK='react'
+source "$T2_SCRIPTS/helpers/t2-create" $1

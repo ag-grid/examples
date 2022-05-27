@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+source "$T2_HOME/scripts/helpers/colours.sh"
+
+T2_PROJECTS_DIR_PATH="$T2_HOME/projects"
+
+if [[ $PWD != $T2_PROJECTS_DIR_PATH/** ]]; then
+    echo "You must run this script from within a subdirectory inside $T2_PROJECTS_DIR_PATH"
+    exit 1
+fi
+
+if [ -z $1 ]; then
+    echo "You must provide a version for ag-grid"
+    exit 1
+fi
+
+pat="^[1-9]{2}(?:(\.[0-9]){0,2}){0,2}$"
+if [[ $1 =~ $pat ]]; then
+    echo "not a number!"
+    exit 1
+fi
+
+VERSION_REGEX="^[1-9][0-9]((\.[0-9])(\.[0-9])?)?$"
+
+if [[ ! $1 =~ $VERSION_REGEX  ]]; then
+    echo -e "Invalid input. Please specify a valid AG Grid version:\n  ${CYAN}t2-change-version ${GREEN}<version>"
+    echo -e "${NOCOLOR}For example: \n  ${CYAN}t2-change-version ${GREEN}27 \n  ${CYAN}t2-change-version ${GREEN}27.1 \n  ${CYAN}t2-change-version ${GREEN}27.0.1"
+    exit 1
+fi
+
+echo -e "Running: ${GREEN}npm install ag-grid-community@$1"
+npm install ag-grid-community@$1
+npm install ag-grid-enterprise@$1
