@@ -1,9 +1,9 @@
 {
     "react": {
-        "indexHTML": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/reactFunctional/index.html",
+        "indexHTML": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/reactFunctional/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/reactFunctional/index.jsx",
+                "url": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/reactFunctional/index.jsx",
                 "destination": "src/index.js"
             }
         ],
@@ -16,14 +16,14 @@
         ]
     },
     "angular": {
-        "indexHTML": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/angular/index.html",
+        "indexHTML": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/angular/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/angular/app/app.component.ts",
+                "url": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/angular/app/app.component.ts",
                 "destination": "src/app/app.component.ts"
             },
             {
-                "url": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/angular/app/app.module.ts",
+                "url": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/angular/app/app.module.ts",
                 "destination": "src/app/app.module.ts"
             }
         ],
@@ -33,10 +33,10 @@
         ]
     },
     "vue": {
-        "indexHTML": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/vue/index.html",
+        "indexHTML": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/vue/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/vue/main.js",
+                "url": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/vue/main.js",
                 "destination": "src/main.js"
             }
         ],
@@ -47,10 +47,10 @@
         ]
     },
     "vanilla": {
-        "indexHTML": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/vanilla/index.html",
+        "indexHTML": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/vanilla/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/vanilla/main.js",
+                "url": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/vanilla/main.js",
                 "destination": "src/index.js"
             }
         ],
