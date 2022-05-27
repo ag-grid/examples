@@ -1,0 +1,3 @@
+TICKET="t2t-6184"
+FRAMEWORK="angular"
+DOCS_EXAMPLE=""
