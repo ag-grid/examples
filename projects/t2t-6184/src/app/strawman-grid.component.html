@@ -1,0 +1,53 @@
+<!-- <div class="container-fluid">
+  <div class="row">
+    <div class="col-6 d-flex align-items-center">
+      <section [formGroup]="filters">
+        <mat-checkbox formControlName="default" color="primary" class="pr-2" (change)="filterColumns(true)">Default
+        </mat-checkbox>
+        <mat-checkbox formControlName="trueRateMix" color="primary" class="pr-2" (change)="filterColumns(true)">True
+          Rate/Mix</mat-checkbox>
+        <mat-checkbox formControlName="cogs" color="primary" class="pr-2" (change)="filterColumns(true)">COGS
+        </mat-checkbox>
+        <mat-checkbox formControlName="inputOnly" color="primary" class="pr-2" (change)="filterColumns(true)">Input Only
+        </mat-checkbox>
+        <mat-checkbox formControlName="stool" color="primary" class="pr-2" (change)="filterColumns(true)">The Stool
+        </mat-checkbox>
+      </section>
+    </div>
+    <div class="col-4">
+      <form>
+        <mat-form-field class="w-100" color="primary">
+          <mat-label>Select a Planning Channel</mat-label>
+          <input type="text" matInput [formControl]="planningChannelsControl" [matAutocomplete]="auto"
+            [(ngModel)]="selectedPlanningChannel">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPlanningChannelFn"
+            (optionSelected)="setSelectedPlanningChannel($event)">
+            <mat-option *ngFor="let planningChannel of filteredPlanningChannels | async" [value]="planningChannel">
+              {{planningChannel.PLANNING_CHANNEL}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="col-2 d-flex align-items-center justify-content-end">
+      <button mat-icon-button color="primary" class="" matTooltip="Toggle Only Totals" (click)="toggleRows()"><i
+          class="fa-solid fa-down-left-and-up-right-to-center"></i></button>
+      <button mat-icon-button color="primary" class="" matTooltip="Toggle All Columns" (click)="filterColumns(false)"><i
+          class="fa-solid fa-minimize"></i></button>
+    </div>
+  </div> -->
+  <div class="row">
+    <div class="col-12">
+      <ag-grid-angular #agGrid style="width: 100%; height: calc(100vh - 170px);" id="myGrid" class="ag-theme-balham"
+        [columnDefs]="columnDefs" [rowData]="rowData" [modules]="modules" [defaultColDef]="defaultColDef"
+        [autoGroupColumnDef]="autoGroupColumnDef" [getDataPath]="getDataPath" [groupDefaultExpanded]="1"
+        [enableCellChangeFlash]="true" [undoRedoCellEditing]="true" [columnTypes]="columnTypes"
+        [undoRedoCellEditingLimit]="undoRedoCellEditingLimit" [rowClassRules]="rowClassRules"
+        (firstDataRendered)="onFirstDataRendered($event)" (filterChanged)="onFilterChanged($event)" [headerHeight]="50"
+        [treeData]="true" (sortChanged)="onSortChanged($event)" [getContextMenuItems]="getContextMenuItems"
+        [sideBar]="sideBar" [frameworkComponents]="frameworkComponents" (rowClicked)="onRowClick($event)"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    </div>
+  </div>
+<!-- </div> -->
