@@ -7,11 +7,11 @@
                 "destination": "src/index.js"
             },
             {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/reactFunctional/style.css",
+                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/reactFunctional/styles.css",
                 "destination": "src/style.css"
             },
             {
-                "url": "https://wxww.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/reactFunctional/detailCellRenderer.jsx",
+                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/reactFunctional/detailCellRenderer.jsx",
                 "destination": "src/detailCellRenderer.jsx"
             }
         ],

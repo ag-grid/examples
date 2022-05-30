@@ -12,7 +12,7 @@ fi
 # optional commit message
 if [ $# -eq 0 ]
   then
-    COMMIT_MESSAGE='update'
+    COMMIT_MESSAGE="update ticket $TICKET"
   else 
     COMMIT_MESSAGE=$1
 fi
