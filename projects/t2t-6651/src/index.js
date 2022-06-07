@@ -4,6 +4,9 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import * as agGrid from "ag-grid-community";
 
+
+console.time()
+
 // specify the columns
 const columnDefs = [
   { field: "make" },
@@ -13,7 +16,8 @@ const columnDefs = [
 
 // let the grid know which columns to use
 const gridOptions = {
-  columnDefs: columnDefs
+  columnDefs: columnDefs,
+  onGridReady: () => console.timeEnd()
 };
 
 // lookup the container we want the Grid to use
