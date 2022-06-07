@@ -1,3 +1,0 @@
-TICKET="t2t-5446"
-FRAMEWORK="vanilla"
-DOCS_EXAMPLE=""
