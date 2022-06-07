@@ -1,3 +1,0 @@
-TICKET="sham"
-FRAMEWORK="vanilla"
-DOCS_EXAMPLE=""

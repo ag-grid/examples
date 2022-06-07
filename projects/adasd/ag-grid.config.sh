@@ -1,3 +1,0 @@
-TICKET="adasd"
-FRAMEWORK="vanilla"
-DOCS_EXAMPLE=""

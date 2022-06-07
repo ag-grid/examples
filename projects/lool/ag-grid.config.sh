@@ -1,3 +1,0 @@
-TICKET="lool"
-FRAMEWORK="vanilla"
-DOCS_EXAMPLE=""
