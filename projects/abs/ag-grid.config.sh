@@ -1,0 +1,3 @@
+TICKET="abs"
+FRAMEWORK="vanilla"
+DOCS_EXAMPLE=""

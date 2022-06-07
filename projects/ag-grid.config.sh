@@ -1,0 +1,3 @@
+TICKET="."
+FRAMEWORK="vanilla"
+DOCS_EXAMPLE=""
