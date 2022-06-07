@@ -76,7 +76,14 @@ case "$FRAMEWORK" in
     ;;
 'vanilla')
     if [[ $AG_GRID_METHOD == "packages" ]]; then
-        echo 'creating a vanilla js project'
+        echo 'creating a vanilla js packages project'
+        cp -r $TEMPLATE_DIR_PATH $PROJECT_DIR_PATH
+        echo "installing AG Grid dependencies..."
+        npm i --prefix $PROJECT_DIR_PATH
+    fi
+
+    if [[ $AG_GRID_METHOD == "modules" ]]; then
+        echo 'creating a vanilla js modules project'
         cp -r $TEMPLATE_DIR_PATH $PROJECT_DIR_PATH
         echo "installing AG Grid dependencies..."
         npm i --prefix $PROJECT_DIR_PATH
