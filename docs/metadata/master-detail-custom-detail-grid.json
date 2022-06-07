@@ -8,7 +8,7 @@
             },
             {
                 "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/reactFunctional/styles.css",
-                "destination": "src/style.css"
+                "destination": "src/styles.css"
             },
             {
                 "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/reactFunctional/detailCellRenderer.jsx",
