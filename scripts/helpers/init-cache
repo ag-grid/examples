@@ -26,6 +26,16 @@ if test -d "$PROJECT_DIR_PATH"; then
     rm -rf $PROJECT_DIR_PATH
 fi
 
+if [[ ! -d "./cache" ]]; then
+    echo "creating ./cache..."
+    mkdir "cache"
+fi
+
+if [[ ! -d "./cache/$AG_GRID_METHOD" ]]; then
+    echo "creating ./cache/$AG_GRID_METHOD..."
+    mkdir "cache/$AG_GRID_METHOD"
+fi
+
 # git pull && /
 
 case "$FRAMEWORK" in
@@ -44,23 +54,29 @@ case "$FRAMEWORK" in
     ;;
 'react')
     echo "bootstrapping a create-react-app project..."
-    npx create-react-app $PROJECT_DIR_PATH && /
-    echo "installing AG Grid dependencies..."
-    npm i --save ag-grid-react ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH
+    npx create-react-app $PROJECT_DIR_PATH
+    if [[ $AG_GRID_METHOD == "packages" ]]; then
+        echo "installing AG Grid dependencies..."
+        npm i --save ag-grid-react ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH
+    fi
     ;;
 'vue')
     echo "bootstrapping a vue.js CLI project..."
-    cd "$T2_HOME/cache" && /
-    vue create -i '{ "useConfigFiles": true, "plugins": { "@vue/cli-plugin-babel": {} }, "vueVersion": "2", "cssPreprocessor": "node-sass" }' $PROJECT_NAME
-    echo "installing AG Grid dependencies..."
-    npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 --prefix $PROJECT_DIR_PATH
+    cd "$T2_HOME/cache/$AG_GRID_METHOD"
+    vue create -i '{ "useConfigFiles": true, "plugins": { "@vue/cli-plugin-babel": {} }, "vueVersion": "2", "cssPreprocessor": "sass" }' $PROJECT_NAME
+    if [[ $AG_GRID_METHOD == "packages" ]]; then
+        echo "installing AG Grid dependencies..."
+        npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 --prefix $PROJECT_DIR_PATH
+    fi
     cd $T2_HOME
     ;;
 'vanilla')
-    echo 'creating a vanilla js project'
-    cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
-    echo "installing AG Grid dependencies..."
-    npm i --prefix $PROJECT_DIR_PATH
+    if [[ $AG_GRID_METHOD == "packages" ]]; then
+        echo 'creating a vanilla js project'
+        cp -r $TEMPLATE_DIR_PATH $PROJECT_DIR_PATH
+        echo "installing AG Grid dependencies..."
+        npm i --prefix $PROJECT_DIR_PATH
+    fi
     ;;
 *)
     echo "$FRAMEWORK not recognised"
@@ -75,7 +91,7 @@ chmod -R 755 *
 
 # apply template
 echo "applying $FRAMEWORK template..."
-'cp' -rf $TEMPLATE_DIR_PATH/* $PROJECT_DIR_PATH
+cp -rf $TEMPLATE_DIR_PATH/* $PROJECT_DIR_PATH
 
 # create ag-grid.config file (contains framework)
 echo 'creating ag-grid.config.sh file...'
