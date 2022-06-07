@@ -5,11 +5,13 @@ cd $T2_HOME
 echo "initialising cached projects for all frameworks..."
 
 FRAMEWORKS='angular react vue vanilla'
+AG_GRID_METHODS='packages modules'
 
-for FRAMEWORK in $FRAMEWORKS 
-    do
-    cd $T2_HOME
-    source "scripts/helpers/init-cache" -$FRAMEWORK
+for FRAMEWORK in $FRAMEWORKS; do
+    for AG_GRID_METHOD in $AG_GRID_METHODS; do
+        cd $T2_HOME
+        source "scripts/helpers/init-cache" -$FRAMEWORK --$AG_GRID_METHOD
+    done
 done
 
 echo "────────▓▓▓▓▓▓▓────────────▒▒▒▒▒▒"

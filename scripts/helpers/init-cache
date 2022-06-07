@@ -1,12 +1,24 @@
 #!/usr/bin/env bash
 
 cd $T2_HOME
-
 source "scripts/helpers/script_requires_framework_as_param"
 
+AG_GRID_METHOD=$(echo $2 | gsed -n -e 's/--\(packages\).*/\1/p' -e 's/--\(modules\).*/\1/p')
+
+if [ -z $AG_GRID_METHOD ]; then
+    echo "[init-cache] no method provided, using packages by default"
+    AG_GRID_METHOD='packages'
+fi
+
+if ([ ! $AG_GRID_METHOD == 'packages' ] && [ ! $AG_GRID_METHOD == 'modules' ]); then
+    echo 'you must pass a method flag as a paramater to this script.'
+    echo 'e.g. --packages | --modules'
+    exit 1
+fi
+
 PROJECT_NAME="cached-$FRAMEWORK"
-PROJECT_DIR_PATH="$T2_HOME/cache/$PROJECT_NAME"
-TEMPLATE_DIR_PATH="$T2_HOME/templates/$FRAMEWORK"
+PROJECT_DIR_PATH="$T2_HOME/cache/$AG_GRID_METHOD/$PROJECT_NAME"
+TEMPLATE_DIR_PATH="$T2_HOME/templates/$AG_GRID_METHOD/$FRAMEWORK"
 
 # if project already exists -> exit process
 if test -d "$PROJECT_DIR_PATH"; then
@@ -16,34 +28,41 @@ fi
 
 # git pull && /
 
-case "$FRAMEWORK" in  
-    'angular')
-        echo "bootstrapping an Angular CLI project..."
-        ng new my-ag-grid --directory "./cache/$PROJECT_NAME" --style scss --routing false --strict false --skip-git true && /
-        echo "installing AG Grid dependencies..."
-        npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
-        ;;
-    'react')
-        echo "bootstrapping a create-react-app project..."
-        npx create-react-app $PROJECT_DIR_PATH && /
-        echo "installing AG Grid dependencies..."
-        npm i --save ag-grid-react ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
-        ;;
-    'vue')
-        echo "bootstrapping a vue.js CLI project..."
-        cd "$T2_HOME/cache" && /
-        vue create -i '{ "useConfigFiles": true, "plugins": { "@vue/cli-plugin-babel": {} }, "vueVersion": "2", "cssPreprocessor": "node-sass" }' $PROJECT_NAME && /
-        echo "installing AG Grid dependencies..."
-        npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 --prefix $PROJECT_DIR_PATH && /
-        cd $T2_HOME &&/
-        ;;
-    'vanilla')
-        echo 'creating a vanilla js project'
-        cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
-        echo "installing AG Grid dependencies..."
-        npm i --prefix $PROJECT_DIR_PATH && /
-        ;;
-    *) 
+case "$FRAMEWORK" in
+'angular')
+    echo "bootstrapping an Angular CLI project..."
+    ng new my-ag-grid --directory "./cache/$AG_GRID_METHOD/$PROJECT_NAME" --style scss --routing false --strict false --skip-git true
+    echo "installing AG Grid dependencies..."
+
+    if [[ $AG_GRID_METHOD == "modules" ]]; then
+        npm i --save @ag-grid-community/angular @ag-grid-community/core @ag-grid-community/client-side-row-model @ag-grid-community/infinite-row-model @ag-grid-community/csv-export @ag-grid-enterprise/core @ag-grid-enterprise/charts @ag-grid-enterprise/sparklines @ag-grid-enterprise/clipboard @ag-grid-enterprise/column-tool-panel @ag-grid-enterprise/excel-export @ag-grid-enterprise/filter-tool-panel @ag-grid-enterprise/master-detail @ag-grid-enterprise/menu @ag-grid-enterprise/range-selection @ag-grid-enterprise/rich-select @ag-grid-enterprise/row-grouping @ag-grid-enterprise/server-side-row-model @ag-grid-enterprise/set-filter @ag-grid-enterprise/multi-filter @ag-grid-enterprise/side-bar @ag-grid-enterprise/status-bar @ag-grid-enterprise/viewport-row-model --prefix $PROJECT_DIR_PATH
+    fi
+
+    if [[ $AG_GRID_METHOD == "packages" ]]; then
+        npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH
+    fi
+    ;;
+'react')
+    echo "bootstrapping a create-react-app project..."
+    npx create-react-app $PROJECT_DIR_PATH && /
+    echo "installing AG Grid dependencies..."
+    npm i --save ag-grid-react ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH
+    ;;
+'vue')
+    echo "bootstrapping a vue.js CLI project..."
+    cd "$T2_HOME/cache" && /
+    vue create -i '{ "useConfigFiles": true, "plugins": { "@vue/cli-plugin-babel": {} }, "vueVersion": "2", "cssPreprocessor": "node-sass" }' $PROJECT_NAME
+    echo "installing AG Grid dependencies..."
+    npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 --prefix $PROJECT_DIR_PATH
+    cd $T2_HOME
+    ;;
+'vanilla')
+    echo 'creating a vanilla js project'
+    cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
+    echo "installing AG Grid dependencies..."
+    npm i --prefix $PROJECT_DIR_PATH
+    ;;
+*)
     echo "$FRAMEWORK not recognised"
     ;;
 esac
@@ -60,20 +79,18 @@ echo "applying $FRAMEWORK template..."
 
 # create ag-grid.config file (contains framework)
 echo 'creating ag-grid.config.sh file...'
-echo "TICKET=\"$PROJECT_NAME\"" >> ag-grid.config.sh
-echo "FRAMEWORK=\"$FRAMEWORK\"" >> ag-grid.config.sh
-echo "DOCS_EXAMPLE=\"\"" >> ag-grid.config.sh
+echo "TICKET=\"$PROJECT_NAME\"" >>ag-grid.config.sh
+echo "FRAMEWORK=\"$FRAMEWORK\"" >>ag-grid.config.sh
+echo "DOCS_EXAMPLE=\"\"" >>ag-grid.config.sh
 
 # angular specific
-if [[ $FRAMEWORK == "angular" ]]
-then
-# need to move AG Grid style imports from src/styles.scss -> src/app/app.component.ts for codesandbox
-echo "[Angular only] injecting AG Grid stylesheet imports from src/styles.scss -> src/app/app.component.ts for codesandbox"
-STYLE_IMPORTS=$( gsed -n "/@import/p" src/styles.scss )
-FORMATTED_STLYE_IMPORTS=$( echo $STYLE_IMPORTS | gsed -e 's/( @)\|@//g' | gsed -e 's/; /;\\n/g' )
-gsed -i "/@Component/i $( echo $FORMATTED_STLYE_IMPORTS )" "$PWD/src/app/app.component.ts" 
+if [[ $FRAMEWORK == "angular" && $AG_GRID_METHOD == "packages" ]]; then
+    # need to move AG Grid style imports from src/styles.scss -> src/app/app.component.ts for codesandbox
+    echo "[Angular only] injecting AG Grid stylesheet imports from src/styles.scss -> src/app/app.component.ts for codesandbox"
+    STYLE_IMPORTS=$(gsed -n "/@import/p" src/styles.scss)
+    FORMATTED_STLYE_IMPORTS=$(echo $STYLE_IMPORTS | gsed -e 's/( @)\|@//g' | gsed -e 's/; /;\\n/g')
+    gsed -i "/@Component/i $(echo $FORMATTED_STLYE_IMPORTS)" "$PWD/src/app/app.component.ts"
 fi
-
 
 echo "======================================================"
 echo "new AG Grid $FRAMEWORK project [$PROJECT_NAME] created in cache."

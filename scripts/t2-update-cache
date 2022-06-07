@@ -6,4 +6,4 @@ source "scripts/helpers/script_requires_framework_as_param"
 
 echo "updating [$FRAMEWORK] project in cache..."
 
-source "scripts/helpers/init-cache" -$FRAMEWORK
+source "scripts/helpers/init-cache" -$FRAMEWORK $2

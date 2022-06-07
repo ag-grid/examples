@@ -1,15 +1,26 @@
 #!/usr/bin/env bash
 
 source "$T2_SCRIPTS/helpers/colours.sh"
-source "$T2_SCRIPTS/helpers/script_requires_project_name_as_param.sh" $1
+source "scripts/helpers/script_requires_project_name_as_param.sh"
 cd $T2_HOME
 
-# to lowercase
 PROJECT_NAME=$(echo "$1" | tr '[:upper:]' '[:lower:]')
-echo -e "Creating $FRAMEWORK project ${CYAN}[$PROJECT_NAME]${NOCOLOR}..."
-
-CACHED_PROJECT_DIR_PATH="$T2_HOME/cache/cached-$FRAMEWORK"
+AG_GRID_METHOD='packages'
 NEW_PROJECT_DIR_PATH="$T2_HOME/projects/$PROJECT_NAME"
+
+if [[ $2 = "--modules" ]]; then
+    AG_GRID_METHOD='modules'
+fi
+
+if [[ $AG_GRID_METHOD == "modules" ]]; then
+    echo -e "Creating ${GREEN}$FRAMEWORK ${NOCOLOR}project with AG Grid ${GREEN}Modules ${CYAN}[$PROJECT_NAME]${NOCOLOR}..."
+    CACHED_PROJECT_DIR_PATH="$T2_HOME/cache/modules/cached-$FRAMEWORK"
+else
+    echo -e "Creating ${GREEN}$FRAMEWORK ${NOCOLOR}project with AG Grid ${GREEN}Packages ${CYAN}[$PROJECT_NAME]${NOCOLOR}..."
+    CACHED_PROJECT_DIR_PATH="$T2_HOME/cache/packages/cached-$FRAMEWORK"
+fi
+
+# to lowercase
 
 # move project contents from t2/cache into t2/projects folder
 mkdir $NEW_PROJECT_DIR_PATH
@@ -33,8 +44,8 @@ echo ""
 
 if [ -n $MY_EDITOR ]; then
     # open in text editor
-    $MY_EDITOR $NEW_PROJECT_DIR_PATH  
+    $MY_EDITOR $NEW_PROJECT_DIR_PATH
 fi
 
 # update cache in foreground
-source "scripts/t2-update-cache" -$FRAMEWORK
+source "scripts/t2-update-cache" -$FRAMEWORK --$AG_GRID_METHOD
