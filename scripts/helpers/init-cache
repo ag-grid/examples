@@ -114,6 +114,7 @@ echo 'creating ag-grid.config.sh file...'
 echo "TICKET=\"$PROJECT_NAME\"" >>ag-grid.config.sh
 echo "FRAMEWORK=\"$FRAMEWORK\"" >>ag-grid.config.sh
 echo "DOCS_EXAMPLE=\"\"" >>ag-grid.config.sh
+echo "AG_GRID_INSTALLATION_METHOD=\"$AG_GRID_METHOD\"" >>ag-grid.config.sh
 
 # angular specific
 if [[ $FRAMEWORK == "angular" && $AG_GRID_METHOD == "packages" ]]; then
