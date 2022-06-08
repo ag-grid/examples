@@ -3,19 +3,6 @@
 cd $T2_HOME
 source "scripts/helpers/script_requires_framework_as_param"
 
-AG_GRID_METHOD=$(echo $2 | gsed -n -e 's/--\(packages\).*/\1/p' -e 's/--\(modules\).*/\1/p')
-
-if [ -z $AG_GRID_METHOD ]; then
-    echo "[init-cache] no method provided, using packages by default"
-    AG_GRID_METHOD='packages'
-fi
-
-if ([ ! $AG_GRID_METHOD == 'packages' ] && [ ! $AG_GRID_METHOD == 'modules' ]); then
-    echo 'you must pass a method flag as a paramater to this script.'
-    echo 'e.g. --packages | --modules'
-    exit 1
-fi
-
 PROJECT_NAME="cached-$FRAMEWORK"
 PROJECT_DIR_PATH="$T2_HOME/cache/$AG_GRID_METHOD/$PROJECT_NAME"
 TEMPLATE_DIR_PATH="$T2_HOME/templates/$AG_GRID_METHOD/$FRAMEWORK"
@@ -26,24 +13,23 @@ if test -d "$PROJECT_DIR_PATH"; then
     rm -rf $PROJECT_DIR_PATH
 fi
 
+# check if cache folder exists, otherwise create it
 if [[ ! -d "./cache" ]]; then
     echo "creating ./cache..."
     mkdir "cache"
 fi
 
+# check if cache/cached-<framework> exists, otherwise create it
 if [[ ! -d "./cache/$AG_GRID_METHOD" ]]; then
     echo "creating ./cache/$AG_GRID_METHOD..."
     mkdir "cache/$AG_GRID_METHOD"
 fi
-
-# git pull && /
 
 case "$FRAMEWORK" in
 'angular')
     echo "bootstrapping an Angular CLI project..."
     ng new my-ag-grid --directory "./cache/$AG_GRID_METHOD/$PROJECT_NAME" --style scss --routing false --strict false --skip-git true
     echo "installing AG Grid dependencies..."
-
     if [[ $AG_GRID_METHOD == "modules" ]]; then
         npm i --save @ag-grid-community/angular @ag-grid-community/core @ag-grid-community/client-side-row-model @ag-grid-community/infinite-row-model @ag-grid-community/csv-export @ag-grid-enterprise/core @ag-grid-enterprise/charts @ag-grid-enterprise/sparklines @ag-grid-enterprise/clipboard @ag-grid-enterprise/column-tool-panel @ag-grid-enterprise/excel-export @ag-grid-enterprise/filter-tool-panel @ag-grid-enterprise/master-detail @ag-grid-enterprise/menu @ag-grid-enterprise/range-selection @ag-grid-enterprise/rich-select @ag-grid-enterprise/row-grouping @ag-grid-enterprise/server-side-row-model @ag-grid-enterprise/set-filter @ag-grid-enterprise/multi-filter @ag-grid-enterprise/side-bar @ag-grid-enterprise/status-bar @ag-grid-enterprise/viewport-row-model --prefix $PROJECT_DIR_PATH
     fi
@@ -55,8 +41,8 @@ case "$FRAMEWORK" in
 'react')
     echo "bootstrapping a create-react-app project..."
     npx create-react-app $PROJECT_DIR_PATH
+    echo "installing AG Grid dependencies..."
     if [[ $AG_GRID_METHOD == "packages" ]]; then
-        echo "installing AG Grid dependencies..."
         npm i --save ag-grid-react ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH
     fi
 
@@ -68,8 +54,8 @@ case "$FRAMEWORK" in
     echo "bootstrapping a vue.js CLI project..."
     cd "$T2_HOME/cache/$AG_GRID_METHOD"
     vue create -i '{ "useConfigFiles": true, "plugins": { "@vue/cli-plugin-babel": {} }, "vueVersion": "2", "cssPreprocessor": "sass" }' $PROJECT_NAME
+    echo "installing AG Grid package dependencies..."
     if [[ $AG_GRID_METHOD == "packages" ]]; then
-        echo "installing AG Grid package dependencies..."
         npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 --prefix $PROJECT_DIR_PATH
     fi
 
@@ -80,17 +66,15 @@ case "$FRAMEWORK" in
     cd $T2_HOME
     ;;
 'vanilla')
+    echo 'creating a vanilla js project'
+    echo "installing AG Grid dependencies..."
     if [[ $AG_GRID_METHOD == "packages" ]]; then
-        echo 'creating a vanilla js packages project'
         cp -r $TEMPLATE_DIR_PATH $PROJECT_DIR_PATH
-        echo "installing AG Grid dependencies..."
         npm i --prefix $PROJECT_DIR_PATH
     fi
 
     if [[ $AG_GRID_METHOD == "modules" ]]; then
-        echo 'creating a vanilla js modules project'
         cp -r $TEMPLATE_DIR_PATH $PROJECT_DIR_PATH
-        echo "installing AG Grid dependencies..."
         npm i --prefix $PROJECT_DIR_PATH
     fi
     ;;
