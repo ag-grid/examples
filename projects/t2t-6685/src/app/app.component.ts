@@ -2,13 +2,14 @@ import { Component } from "@angular/core";
 import "ag-grid-enterprise";
 import { HttpClient } from "@angular/common/http";
 
-LicenseManager.setLicenseKey(
-  'CompanyName=SoftwareONE Inc._on_behalf_of_Macquarie Global,LicensedGroup=Macquarie CGM Technology UX,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=35,LicensedProductionInstancesCount=1,AssetReference=AG-017044,ExpiryDate=8_November_2022_[v2]_MTY2Nzg2NTYwMDAwMA==db746e75045c67b6e7d0c34472e5ff57'
-);
-
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { LicenseManager } from "ag-grid-enterprise";
+
+LicenseManager.setLicenseKey(
+  "CompanyName=SoftwareONE Inc._on_behalf_of_Macquarie Global,LicensedGroup=Macquarie CGM Technology UX,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=35,LicensedProductionInstancesCount=1,AssetReference=AG-017044,ExpiryDate=8_November_2022_[v2]_MTY2Nzg2NTYwMDAwMA==db746e75045c67b6e7d0c34472e5ff57"
+);
+
 @Component({
   selector: "my-app",
   template: `<ag-grid-angular
@@ -21,7 +22,7 @@ import { LicenseManager } from "ag-grid-enterprise";
     [enableRangeSelection]="true"
     [rowData]="rowData"
     (gridReady)="onGridReady($event)"
-  ></ag-grid-angular>`
+  ></ag-grid-angular>`,
 })
 export class AppComponent {
   public gridApi: any;
@@ -34,36 +35,36 @@ export class AppComponent {
     this.columnDefs = [
       {
         field: "athlete",
-        minWidth: 150
+        minWidth: 150,
       },
       {
         field: "age",
-        maxWidth: 90
+        maxWidth: 90,
       },
       {
         field: "country",
-        minWidth: 150
+        minWidth: 150,
       },
       {
         field: "year",
-        maxWidth: 90
+        maxWidth: 90,
       },
       {
         field: "date",
-        minWidth: 150
+        minWidth: 150,
       },
       {
         field: "sport",
-        minWidth: 150
+        minWidth: 150,
       },
       { field: "gold" },
       { field: "silver" },
       { field: "bronze" },
-      { field: "total" }
+      { field: "total" },
     ];
     this.defaultColDef = {
       flex: 1,
-      minWidth: 100
+      minWidth: 100,
     };
   }
 
@@ -71,8 +72,10 @@ export class AppComponent {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    this.http.get("https://www.ag-grid.com/example-assets/olympic-winners.json").subscribe((data) => {
-      this.rowData = data;
-    });
+    this.http
+      .get("https://www.ag-grid.com/example-assets/olympic-winners.json")
+      .subscribe((data) => {
+        this.rowData = data;
+      });
   }
 }

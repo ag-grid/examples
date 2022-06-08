@@ -69,14 +69,26 @@ case "$FRAMEWORK" in
     cd "$T2_HOME/cache/$AG_GRID_METHOD"
     vue create -i '{ "useConfigFiles": true, "plugins": { "@vue/cli-plugin-babel": {} }, "vueVersion": "2", "cssPreprocessor": "sass" }' $PROJECT_NAME
     if [[ $AG_GRID_METHOD == "packages" ]]; then
-        echo "installing AG Grid dependencies..."
+        echo "installing AG Grid package dependencies..."
         npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 --prefix $PROJECT_DIR_PATH
+    fi
+
+    if [[ $AG_GRID_METHOD == "modules" ]]; then
+        echo "installing AG Grid modules dependencies..."
+        npm i --save @ag-grid-community/vue @ag-grid-community/core @ag-grid-community/client-side-row-model @ag-grid-community/infinite-row-model @ag-grid-community/csv-export @ag-grid-enterprise/core @ag-grid-enterprise/charts @ag-grid-enterprise/sparklines @ag-grid-enterprise/clipboard @ag-grid-enterprise/column-tool-panel @ag-grid-enterprise/excel-export @ag-grid-enterprise/filter-tool-panel @ag-grid-enterprise/master-detail @ag-grid-enterprise/menu @ag-grid-enterprise/range-selection @ag-grid-enterprise/rich-select @ag-grid-enterprise/row-grouping @ag-grid-enterprise/server-side-row-model @ag-grid-enterprise/set-filter @ag-grid-enterprise/multi-filter @ag-grid-enterprise/side-bar @ag-grid-enterprise/status-bar @ag-grid-enterprise/viewport-row-model vue-property-decorator@^8.0.0 --prefix $PROJECT_DIR_PATH
     fi
     cd $T2_HOME
     ;;
 'vanilla')
     if [[ $AG_GRID_METHOD == "packages" ]]; then
-        echo 'creating a vanilla js project'
+        echo 'creating a vanilla js packages project'
+        cp -r $TEMPLATE_DIR_PATH $PROJECT_DIR_PATH
+        echo "installing AG Grid dependencies..."
+        npm i --prefix $PROJECT_DIR_PATH
+    fi
+
+    if [[ $AG_GRID_METHOD == "modules" ]]; then
+        echo 'creating a vanilla js modules project'
         cp -r $TEMPLATE_DIR_PATH $PROJECT_DIR_PATH
         echo "installing AG Grid dependencies..."
         npm i --prefix $PROJECT_DIR_PATH
