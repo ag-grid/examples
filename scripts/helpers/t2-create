@@ -20,6 +20,12 @@ else
     CACHED_PROJECT_DIR_PATH="$T2_HOME/cache/packages/cached-$FRAMEWORK"
 fi
 
+# if cached framework project does not exist, exit process
+if [[ ! -d $CACHED_PROJECT_DIR_PATH ]]; then
+    echo -e "${RED}Cache does not exist for $AG_GRID_METHOD/cached-$FRAMEWORK.\nPlease run:\n  ${GREEN}t2-update-cache -$FRAMEWORK --$AG_GRID_METHOD"
+    exit 1
+fi
+
 # to lowercase
 
 # move project contents from t2/cache into t2/projects folder
