@@ -3,7 +3,13 @@
 cd $T2_HOME
 
 source "scripts/helpers/script_requires_framework_as_param"
+source "scripts/helpers/requiresPackagesOrModules.sh"
 
-echo "updating [$FRAMEWORK] project in cache..."
+# if empty, default to packages
+if [[ -z "$2" ]]; then
+    AG_GRID_METHOD='packages'
+fi
 
-source "scripts/helpers/init-cache" -$FRAMEWORK $2
+echo "Updating /cache/$AG_GRID_METHOD/cached-$FRAMEWORK project..."
+
+source "scripts/helpers/init-cache" -$FRAMEWORK $AG_GRID_METHOD
