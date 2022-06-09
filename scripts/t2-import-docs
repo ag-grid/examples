@@ -14,8 +14,14 @@ if [[ ! -f ag-grid.config.sh ]]; then
     exit 1
 fi
 
-# import FRAMEWORK, TICKET and DOCS_IMPORTED variables
+# import FRAMEWORK, TICKET, DOCS_IMPORTED and AG_GRID_INSTALLATION_METHOD variables
 source "./ag-grid.config.sh"
+
+# if [ -z $FRAMEWORK ] || ( [ ! $FRAMEWORK == 'angular' ] && [ ! $FRAMEWORK == 'react' ] && [ ! $FRAMEWORK == 'vue' ] && [ ! $FRAMEWORK == 'vanilla' ] ); then
+if [ -z $AG_GRID_INSTALLATION_METHOD ]; then
+    echo "AG_GRID_INSTALLATION_METHOD is missing in ag-grid.config.sh"
+    exit 1
+fi
 
 # this script can only be run once per project
 if [[ ! $DOCS_EXAMPLE == "" ]]; then
@@ -48,9 +54,11 @@ T2_DOCS_METADATA_DIR_PATH="$T2_HOME/docs/metadata"
 jq -c .$FRAMEWORK'.filesToFetch[]' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
     # do stuff with $i
     docs_url=$(echo "$i" | jq -r '.url')
+    if [ $AG_GRID_INSTALLATION_METHOD == "modules" ]; then
+        docs_url=$(echo "$docs_url" | gsed -e 's/\/packages\//\/modules\//g' )
+    fi
     destination=$(echo "$i" | jq -r '.destination')
     echo "$docs_url > $destination"
-
     # fetch and import
     curl -o $destination $docs_url
 done
@@ -71,6 +79,9 @@ echo 'injecting page styles...'
 jq -c .$FRAMEWORK'.indexHTML' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
     # create an temporary HTML file where we will output the fetched index.html file
     URL=$(echo "$i" | jq -r)
+    if [ $AG_GRID_INSTALLATION_METHOD == "modules" ]; then
+        URL=$(echo "$URL" | gsed -e 's/\/packages\//\/modules\//g' )
+    fi
     curl -o tmp.html $URL
     # match the <style></style> tags and store them in a variable
     PAGE_STYLES=$(gsed -n "/<style.*/,/<\/style>/p" tmp.html)
