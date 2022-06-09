@@ -1,94 +1,54 @@
-import React, { Component } from 'react';
+import React, { useMemo, useState, useCallback } from 'react'
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import './App.css';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      columnDefs: [
-        {
-          field: 'athlete',
-          minWidth: 150,
-        },
-        {
-          field: 'age',
-          maxWidth: 90,
-        },
-        {
-          field: 'country',
-          minWidth: 150,
-        },
-        {
-          field: 'year',
-          maxWidth: 90,
-        },
-        {
-          field: 'date',
-          minWidth: 150,
-        },
-        {
-          field: 'sport',
-          minWidth: 150,
-        },
-        { field: 'gold' },
-        { field: 'silver' },
-        { field: 'bronze' },
-        { field: 'total' },
-      ],
-      defaultColDef: {
-        flex: 1,
-        minWidth: 100,
-      },
-      rowData: null,
+const App = () => {
+  const containerStyle = useMemo(() => ({ width: '1000px', height: '1000px' }), []);
+  const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
+  const [rowData, setRowData] = useState();
+  const [columnDefs, setColumnDefs] = useState([
+    { field: 'athlete', minWidth: 150 },
+    { field: 'age', maxWidth: 90 },
+    { field: 'country', minWidth: 150 },
+    { field: 'year', maxWidth: 90 },
+    { field: 'date', minWidth: 150 },
+    { field: 'sport', minWidth: 150 },
+    { field: 'gold' },
+    { field: 'silver' },
+    { field: 'bronze' },
+    { field: 'total' },
+  ]);
+  const defaultColDef = useMemo(() => {
+    return {
+      flex: 1,
+      minWidth: 100,
     };
-  }
+  }, []);
 
-  onGridReady = (params) => {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
+  const onGridReady = useCallback((params) => {
+    fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
+      .then((resp) => resp.json())
+      .then((data) => setRowData(data));
+  }, []);
 
-    const httpRequest = new XMLHttpRequest();
-    const updateData = (data) => {
-      this.setState({ rowData: data });
-    };
 
-    httpRequest.open(
-      'GET',
-      'https://www.ag-grid.com/example-assets/olympic-winners.json'
-    );
-    httpRequest.send();
-    httpRequest.onreadystatechange = () => {
-      if (httpRequest.readyState === 4 && httpRequest.status === 200) {
-        updateData(JSON.parse(httpRequest.responseText));
-      }
-    };
-  };
-
-  render() {
-    return (
-      <div style={{ width: '90%', height: '500px', margin: 'auto', marginTop: "100px" }}>
-        <div
-          id="myGrid"
-          style={{
-            height: '100%',
-            width: '100%',
-          }}
-          className="ag-theme-alpine"
-        >
-          <AgGridReact
-            columnDefs={this.state.columnDefs}
-            defaultColDef={this.state.defaultColDef}
-            enableRangeSelection={true}
-            onGridReady={this.onGridReady}
-            rowData={this.state.rowData}
-          />
-        </div>
+  return (
+    <div style={containerStyle}>
+      <div style={gridStyle} className="ag-theme-alpine">
+        <AgGridReact
+          rowData={rowData}
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          enableRangeSelection={true}
+          onGridReady={onGridReady}
+        ></AgGridReact>
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+
+export default App;
