@@ -8,7 +8,6 @@ source "scripts/helpers/requiresPackagesOrModules.sh"
 if [[ -z "$2" ]]; then
     AG_GRID_METHOD='packages'
 fi
-
 # to lowercase
 PROJECT_NAME=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 NEW_PROJECT_DIR_PATH="$T2_HOME/projects/$PROJECT_NAME"
@@ -17,6 +16,12 @@ CACHED_PROJECT_DIR_PATH="$T2_HOME/cache/$AG_GRID_METHOD/cached-$FRAMEWORK"
 # if cached framework project does not exist, exit process
 if [[ ! -d $CACHED_PROJECT_DIR_PATH ]]; then
     echo -e "${RED}Cache does not exist for $AG_GRID_METHOD/cached-$FRAMEWORK.\nPlease run:\n  ${GREEN}t2-update-cache -$FRAMEWORK --$AG_GRID_METHOD"
+    exit 1
+fi
+
+# if project already exists, exit process
+if [[ -d $NEW_PROJECT_DIR_PATH ]]; then
+    echo "$PROJECT_NAME already exists in projects"
     exit 1
 fi
 
