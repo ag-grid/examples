@@ -5,7 +5,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "./App.css";
 
-const MyCellRenderer = (props) => <span>{props.value.toLowerCase()}</span>;
+// const MyCellRenderer = (props) => <span>{props.value.toLowerCase()}</span>;
 
 const App = () => {
   const containerStyle = useMemo(
@@ -33,7 +33,6 @@ const App = () => {
         ],
         cellHeight: 20,
         formatValue: (value) => value.toUpperCase(),
-        cellRenderer: MyCellRenderer,
         searchDebounceDelay: 500,
       },
     },
