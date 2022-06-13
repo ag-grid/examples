@@ -5,8 +5,6 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "./App.css";
 
-// const MyCellRenderer = (props) => <span>{props.value.toLowerCase()}</span>;
-
 const App = () => {
   const containerStyle = useMemo(
     () => ({ width: "1000px", height: "1000px" }),
@@ -20,6 +18,10 @@ const App = () => {
     {
       field: "country",
       minWidth: 150,
+      resizable: true,
+      filter: "agTextColumnFilter",
+      floatingFilter: true,
+      chartDataType: "category",
       cellEditor: "agRichSelectCellEditor",
       cellEditorPopup: true,
       cellEditorParams: {
@@ -66,6 +68,13 @@ const App = () => {
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           enableRangeSelection={true}
+          rowGroupPanelShow={"always"}
+          groupDisplayType={"groupRows"}
+          cacheBlockSize={5}
+          animateRows={true}
+          suppressAggFuncInHeader={true}
+          pagination
+          paginationPageSize={25}
           onGridReady={onGridReady}
         ></AgGridReact>
       </div>
