@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+source "$T2_SCRIPTS/helpers/runFromProjectDirectory.sh"
+
+
+if [[ ! -f "ag-grid.config.sh" ]]; then
+    echo "ag-grid.config.sh file is missing"
+    exit 1
+fi
+
+source "ag-grid.config.sh"
+
+zip -r "$TICKET" . -x "*.DS_Store"
+echo "Created $TICKET.zip... moving to ~/Downloads"
+mv "$TICKET.zip" ~/Downloads/
