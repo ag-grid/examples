@@ -9,6 +9,6 @@ fi
 
 source "ag-grid.config.sh"
 
-zip -r "$TICKET" . -x "*.DS_Store" -x "node_modules\/*" -x "cache\/*" -x "dist\/*"
+zip -r "$TICKET" . -x "*.DS_Store" -x "node_modules\/*" -x ".cache\/*" -x "dist\/*"
 echo "Created $TICKET.zip... moving to ~/Downloads"
 mv "$TICKET.zip" ~/Downloads/
