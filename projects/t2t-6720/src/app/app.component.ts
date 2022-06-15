@@ -15,6 +15,17 @@ const comparatorA = (aV: any, bV: any) => {
   return aV.localeCompare(bV);
 };
 
+const comparatorB = (aV: any, bV: any, inv: any) => {
+  if (aV == null && bV == null) {
+    return 0;
+  } else if (aV == null || bV == null) {
+    return aV == null ? 1 : -1;
+  }
+
+  const diff = aV.localeCompare(bV);
+  return inv ? -1 * diff : diff;
+};
+
 @Component({
   selector: "my-app",
   template: `<ag-grid-angular
@@ -46,7 +57,7 @@ export class AppComponent {
       { field: "country" },
       { field: "year" },
       { field: "athlete", comparator: comparatorA },
-      { field: "sport" },
+      { field: "sport", comparator: comparatorB },
       { field: "gold" },
       { field: "silver" },
       { field: "bronze" },
