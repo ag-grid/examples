@@ -12,6 +12,8 @@ const comparatorA = (aV: any, bV: any) => {
   } else if (aV == null || bV == null) {
     return aV == null ? 1 : -1;
   }
+
+  console.log("called");
   return aV.localeCompare(bV);
 };
 
@@ -83,8 +85,8 @@ export class AppComponent {
 
     this.http
       .get("https://www.ag-grid.com/example-assets/olympic-winners.json")
-      .subscribe((data) => {
-        this.rowData = data;
+      .subscribe((data: any) => {
+        this.rowData = data.slice(0, 10);
       });
   }
 }
