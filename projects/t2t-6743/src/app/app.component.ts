@@ -11,25 +11,6 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine-dark.css";
 import "ag-grid-enterprise";
 
-export class TestDataSource {
-  constructor(private http: HttpClient) {}
-
-  getRows(params) {
-    this.http
-      .get(
-        "https://raw.githubusercontent.com/ag-grid/ag-grid/master/packages/ag-grid-docs/src/olympicWinners.json"
-      )
-      .subscribe((data: any) => {
-        var rowsThisPage = data.slice(params.startRow, params.endRow);
-        var lastRow = -1;
-        if (data.length <= params.endRow) {
-          lastRow = data.length;
-        }
-        params.successCallback(rowsThisPage, lastRow);
-        console.log("new datasource called");
-      });
-  }
-}
 
 @Component({
   selector: "my-app",
