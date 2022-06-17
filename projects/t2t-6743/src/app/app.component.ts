@@ -97,7 +97,6 @@ const createServerSideDatasource = (server: any): IServerSideDatasource => {
   return {
     getRows: (params) => {
       console.log(
-        
         "getRows is called"
       );
 
