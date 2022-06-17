@@ -9,13 +9,7 @@ then
     exit 1
 fi
 
-# optional commit message
-if [ $# -eq 0 ]
-  then
-    COMMIT_MESSAGE="update ticket $TICKET"
-  else 
-    COMMIT_MESSAGE=$1
-fi
+
 
 # if ag-grid.config.sh file missing -> exit
 if [[ ! -f ag-grid.config.sh ]]
@@ -26,6 +20,14 @@ fi
 
 # import FRAMEWORK, TICKET and DOCS_IMPORTED variables
 source "./ag-grid.config.sh"
+
+# optional commit message
+if [ $# -eq 0 ]
+  then
+    COMMIT_MESSAGE="updated ticket $TICKET"
+  else 
+    COMMIT_MESSAGE=$1
+fi
 
 cd $T2_HOME
 git add . && /
