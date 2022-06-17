@@ -70,7 +70,6 @@ export class AppComponent {
   public gridApi: any;
 
 
-
   constructor(public http: HttpClient) {}
 
   setDatasource() {
@@ -95,12 +94,11 @@ export class AppComponent {
 
 const createServerSideDatasource = (server: any): IServerSideDatasource => {
 
-let counter = 0;
   return {
     getRows: (params) => {
       console.log(
         
-        "getRows is called "
+        "getRows is called"
       );
 
       // get data for request from our fake server
