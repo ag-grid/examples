@@ -31,7 +31,7 @@ import "ag-grid-enterprise";
 })
 export class AppComponent {
   public columnDefs: ColDef[] = [
-    { field: "athlete", minWidth: 220 },
+    { field: "athlete", minWidth: 210 },
     { field: "country", minWidth: 200 },
     { field: "year" },
     { field: "sport", minWidth: 200 },
