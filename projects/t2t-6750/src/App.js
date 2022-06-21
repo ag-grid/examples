@@ -33,7 +33,6 @@ const App = () => {
 
   const autoGroupColumnDef = useMemo(() => {
     return {
-      headerValueGetter: (params) => `${params.colDef.headerName} Group Column`,
       minWidth: 220,
       cellRendererParams: {
         suppressCount: true,
@@ -43,13 +42,13 @@ const App = () => {
   }, []);
 
   const updateAutoGroupCol = () => {
- 
-    console.log('clicked')
+    console.log("clicked");
 
-    let newDefs = [{ field: 'age' }, { field: 'date' }, { field: 'country' }];
+    gridRef.current.api.setAutoGroupColumnDef({
+      headerName: "Updated!",
+    });
 
-    gridRef.current.api.setAutoGroupColumnDef(newDefs)
-    // gridRef.current.api.setColumnDefs(newDefs);
+    gridRef.current.api.refreshHeader();
   };
 
   const onGridReady = useCallback((params) => {
@@ -68,7 +67,6 @@ const App = () => {
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           autoGroupColumnDef={autoGroupColumnDef}
-          groupDisplayType={"multipleColumns"}
           animateRows={true}
           onGridReady={onGridReady}
         ></AgGridReact>
