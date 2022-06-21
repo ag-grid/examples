@@ -1,0 +1,4 @@
+TICKET="t2t-6749-hooks-columns-bug"
+FRAMEWORK="react"
+DOCS_EXAMPLE=""
+AG_GRID_INSTALLATION_METHOD="packages"
