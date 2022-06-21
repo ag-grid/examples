@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 source "$T2_SCRIPTS/helpers/colours.sh"
-source "scripts/helpers/script_requires_project_name_as_param.sh"
-source "scripts/helpers/requiresPackagesOrModules.sh"
+source "$T2_SCRIPTS/helpers/script_requires_project_name_as_param.sh"
+source "$T2_SCRIPTS/helpers/requiresPackagesOrModules.sh"
 
 # if empty, default to packages
 if [[ -z "$2" ]]; then
@@ -52,4 +52,4 @@ if [ -n $MY_EDITOR ]; then
 fi
 
 # update cache in foreground
-source "scripts/t2-update-cache" -$FRAMEWORK --$AG_GRID_METHOD
+source "$T2_SCRIPTS/t2-update-cache" -$FRAMEWORK --$AG_GRID_METHOD
