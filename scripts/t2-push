@@ -31,7 +31,10 @@ git push
 cd $T2_HOME
 
 echo -e "${CYAN}============================================================================================================\n"
-echo -e "${GREEN}LINK TO CODESANDBOX: https://codesandbox.io/s/github/ag-grid/examples/tree/main/projects/${TICKET}"
+
+echo -e "LINK TO GITHUB:${GREEN} https://github.com/ag-grid/examples/tree/main/projects/${TICKET}"
+
+echo -e "${CYAN}LINK TO CODESANDBOX:${GREEN} https://codesandbox.io/s/github/ag-grid/examples/tree/main/projects/${TICKET}"
 # stackblitz isnt really working
 # echo "LINK TO STACKBLITZ: https://stackblitz.com/github/ag-grid/examples/tree/main/projects/${TICKET}"
 echo -e "${CYAN}\n============================================================================================================"
