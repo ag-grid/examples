@@ -34,7 +34,7 @@ echo -e "${CYAN}================================================================
 
 echo -e "LINK TO GITHUB:${GREEN} https://github.com/ag-grid/examples/tree/main/projects/${TICKET}"
 
-echo -e "${CYAN}LINK TO CODESANDBOX:${GREEN} https://codesandbox.io/s/github/ag-grid/examples/tree/main/projects/${TICKET}"
+echo -e "${CYAN}\nLINK TO CODESANDBOX:${GREEN} https://codesandbox.io/s/github/ag-grid/examples/tree/main/projects/${TICKET}"
 # stackblitz isnt really working
 # echo "LINK TO STACKBLITZ: https://stackblitz.com/github/ag-grid/examples/tree/main/projects/${TICKET}"
 echo -e "${CYAN}\n============================================================================================================"
