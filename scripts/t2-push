@@ -29,10 +29,10 @@ git add .
 git commit -m "$COMMIT_MESSAGE"
 git push
 
-echo "======================================================"
-echo "LINK TO CODESANDBOX: https://codesandbox.io/s/github/ag-grid/examples/tree/main/projects/${TICKET}"
+echo -e "${CYAN}======================================================"
+echo -e "${GREEN}LINK TO CODESANDBOX: https://codesandbox.io/s/github/ag-grid/examples/tree/main/projects/${TICKET}"
 # stackblitz isnt really working
 # echo "LINK TO STACKBLITZ: https://stackblitz.com/github/ag-grid/examples/tree/main/projects/${TICKET}"
-echo "======================================================"
+echo -e "${CYAN}======================================================"
 
 # open https://codesandbox.io/s/github/ag-grid/examples/tree/main/projects/${TICKET}
