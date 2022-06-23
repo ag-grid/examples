@@ -32,7 +32,7 @@ fi
 cd $T2_HOME
 git add . && /
 git commit -m "$COMMIT_MESSAGE" && /
-git push && /
+git push
 
 
 echo "======================================================"
