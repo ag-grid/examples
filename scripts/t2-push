@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+source "$T2_SCRIPTS/helpers/colours.sh"
 T2_PROJECTS_DIR_PATH="$T2_HOME/projects"
 
 # exit script if running script from outside $T2_HOME/projects/*
@@ -24,15 +24,16 @@ else
   COMMIT_MESSAGE=$1
 fi
 
-cd $T2_HOME
 git add .
 git commit -m "$COMMIT_MESSAGE"
 git push
 
-echo -e "${CYAN}======================================================"
+cd $T2_HOME
+
+echo -e "${CYAN}============================================================================================================\n"
 echo -e "${GREEN}LINK TO CODESANDBOX: https://codesandbox.io/s/github/ag-grid/examples/tree/main/projects/${TICKET}"
 # stackblitz isnt really working
 # echo "LINK TO STACKBLITZ: https://stackblitz.com/github/ag-grid/examples/tree/main/projects/${TICKET}"
-echo -e "${CYAN}======================================================"
+echo -e "${CYAN}\n============================================================================================================"
 
 # open https://codesandbox.io/s/github/ag-grid/examples/tree/main/projects/${TICKET}
