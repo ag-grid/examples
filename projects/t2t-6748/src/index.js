@@ -71,7 +71,7 @@ const GridExample = () => {
       purge: true,
     });
 
-    debounce(refreshServer, 5000);
+    debounce(refreshServer, 1000);
   }, [quickFilterValue]);
 
   const createServerSideDatasource = (server) => {
