@@ -63,15 +63,19 @@ const GridExample = () => {
     };
   };
 
+  const debouncedRefreshSSRM = debounce(
+    () =>
+      gridRef.current.api.refreshServerSideStore({
+        purge: true,
+      }),
+    500
+  );
+
   useEffect(() => {
     if (gridRef.current.api == null) {
       return;
     }
-    const refreshServer = gridRef.current.api.refreshServerSideStore({
-      purge: true,
-    });
-
-    debounce(refreshServer, 1000);
+    debouncedRefreshSSRM();
   }, [quickFilterValue]);
 
   const createServerSideDatasource = (server) => {
