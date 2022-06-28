@@ -1,0 +1,4 @@
+TICKET="t2t-6786"
+FRAMEWORK="angular"
+DOCS_EXAMPLE="master-detail"
+AG_GRID_INSTALLATION_METHOD="packages"
