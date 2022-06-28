@@ -15,5 +15,47 @@
             "src/app/app.component.html",
             "src/app/app.component.scss"
         ]
+    },
+    "react": {
+        "indexHTML": "https://www.ag-grid.com/examples/master-detail/simple/packages/reactFunctional/index.html",
+        "filesToFetch": [
+            {
+                "url": "https://www.ag-grid.com/examples/master-detail/simple/packages/reactFunctional/index.jsx",
+                "destination": "src/index.js"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/App.js",
+            "src/App.css",
+            "src/App.test.js",
+            "src/logo.svg",
+            "src/index.css"
+        ]
+    },
+    "vue": {
+        "indexHTML": "https://www.ag-grid.com/examples/master-detail/simple/packages/vue/index.html",
+        "filesToFetch": [
+            {
+                "url": "https://www.ag-grid.com/examples/master-detail/simple/packages/vue/main.js",
+                "destination": "src/main.js"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/assets",
+            "src/components",
+            "src/App.vue"
+        ]
+    },
+    "vanilla": {
+        "indexHTML": "https://www.ag-grid.com/examples/master-detail/simple/packages/vanilla/index.html",
+        "filesToFetch": [
+            {
+                "url": "https://www.ag-grid.com/examples/master-detail/simple/packages/vanilla/main.js",
+                "destination": "src/index.js"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/styles.css"
+        ]
     }
 }
