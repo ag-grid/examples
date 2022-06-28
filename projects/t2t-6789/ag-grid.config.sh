@@ -1,0 +1,4 @@
+TICKET="t2t-6789"
+FRAMEWORK="react"
+DOCS_EXAMPLE="row-grouping"
+AG_GRID_INSTALLATION_METHOD="packages"
