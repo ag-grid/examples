@@ -129,7 +129,7 @@ const GridExample = () => {
   const onGridReady = useCallback((params) => {
     fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
       .then((resp) => resp.json())
-      .then((data) => setRowData(data.slice(0, 15)));
+      .then((data) => setRowData(data));
 
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
