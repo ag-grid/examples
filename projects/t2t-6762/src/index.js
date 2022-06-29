@@ -98,7 +98,7 @@ const GridExample = () => {
           defaultColDef={defaultColDef}
           rowModelType={'serverSide'}
           serverSideStoreType={'partial'}
-          cacheBlockSize={50}
+          cacheBlockSize={30}
           maxBlocksInCache={2}
           onGridReady={onGridReady}
         ></AgGridReact>
