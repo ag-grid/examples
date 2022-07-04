@@ -1,7 +1,7 @@
 'use strict';
 
-import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { render } from 'react-dom';
+import React, { useCallback, useMemo, useEffect, useState } from 'react';
+import { createRoot } from 'react-dom/client';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
@@ -13,7 +13,8 @@ const GridExample = () => {
   const [gridApi, setGridApi] = useState();
   const [gridColumnApi, setGridColumnApi] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
-  const [rowData, setRowData] = useState(null);
+  const [rowData, setRowData] = useState([]);
+  const [rowCount, setRowCount] = useState(0);
   const [columnDefs, setColumnDefs] = useState([
     {
       field: 'country',
@@ -82,10 +83,15 @@ const GridExample = () => {
 
   const WELDING_SORT_MODEL = [
     {
-      colId: 'Category',
+      colId: 'athlete',
       sort: 'asc',
     },
   ];
+
+  useEffect(() => {
+    const dataLength = rowData.length > 0 ? rowData.length : 5;
+    setRowCount(dataLength);
+  }, [rowData]);
 
   const defaultColDef = useMemo(() => {
     return {
@@ -127,7 +133,7 @@ const GridExample = () => {
   };
 
   const onGridReady = useCallback((params) => {
-    fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
+    fetch('https://synex.ca/elmers/olympic-winners_short.json')
       .then((resp) => resp.json())
       .then((data) => setRowData(data));
 
@@ -137,8 +143,15 @@ const GridExample = () => {
 
   return (
     <div style={containerStyle}>
-      <div style={gridStyle} className='ag-theme-alpine'>
+      <div
+        className='ag-theme-alpine'
+        style={{
+          height: `${rowCount * 40 + 50}px`,
+          width: '100%',
+        }}
+      >
         <AgGridReact
+          onGridReady={onGridReady}
           onFirstDataRendered={onFirstDataRendered}
           enableCellTextSelection
           onSelectionChanged={onSelectionChanged}
@@ -150,11 +163,13 @@ const GridExample = () => {
           suppressMaxRenderedRowRestriction
           defaultColDef={defaultColDef}
           autoGroupColumnDef={autoGroupColumnDef}
-          onGridReady={onGridReady}
         ></AgGridReact>
       </div>
     </div>
   );
 };
 
-render(<GridExample></GridExample>, document.querySelector('#root'));
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(<GridExample></GridExample>);
