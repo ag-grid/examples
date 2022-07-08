@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AgGridModule.withComponents([]),
+    AgGridModule,
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],

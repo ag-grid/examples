@@ -14,7 +14,7 @@ ModuleRegistry.registerModules([ClientSideRowModelModule])
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AgGridModule.withComponents([]),
+    AgGridModule,
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
