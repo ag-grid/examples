@@ -13,7 +13,7 @@ const isFullWidth = (data) => {
   if (data == null) {
     return false;
   }
-  return ['Peru', 'France', 'Italy'].indexOf(data.name) >= 0;
+  return ['Ireland', 'Spain', 'Italy'].indexOf(data.name) >= 0;
 };
 
 class CountryCellRenderer {
