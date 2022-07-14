@@ -7,26 +7,31 @@ import 'ag-grid-enterprise';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
+import data from './data.json';
+
 const GridExample = () => {
   const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
   const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
+  const [shouldBatchUpdate, setShouldBatchUpdate] = useState(false);
+  const [updatedBatch, setUpdatedBatch] = useState({
+    startRowIndex: 0,
+    endRowIndex: 0,
+    colIds: [],
+    gridApi: null,
+  });
+  const editValueRef = useRef('');
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
-  const [rowData, setRowData] = useState();
+  const [rowData, setRowData] = useState(data);
   const [columnDefs, setColumnDefs] = useState([
-    { field: 'athlete', minWidth: 150, checkboxSelection: true },
-    { field: 'age', maxWidth: 90 },
-    { field: 'country', minWidth: 150 },
-    { field: 'year', maxWidth: 90 },
-    { field: 'date', minWidth: 150 },
-    { field: 'sport', minWidth: 150 },
-    { field: 'gold' },
-    { field: 'silver' },
-    { field: 'bronze' },
-    { field: 'total' },
+    { field: 'athlete' },
+    { field: 'country' },
+    { field: 'age' },
+    { field: 'year' },
+    { field: 'sport' },
   ]);
 
-  const clearCells = (start, end, columns, gridApi) => {
+  const editSelectedCells = (start, end, columns, gridApi, value) => {
     let rowIds = {}; // only update rows that ids exists within this obj
 
     for (let i = start; i <= end; i++) {
@@ -41,7 +46,7 @@ const GridExample = () => {
         let newRow = { ...row };
 
         columns.forEach((colId) => {
-          newRow[colId] = '';
+          newRow[colId] = value;
         });
 
         return newRow;
@@ -50,37 +55,18 @@ const GridExample = () => {
   };
 
   const onSuppressKeyboardEvent = (params) => {
-    if (!params.editing) {
-      let isBackspaceKey = params.event.keyCode === 8;
-      let isDeleteKey = params.event.keyCode === 46;
+    let isCtrlKey = params.event.ctrlKey;
+    let isEnterKey = params.event.key === 'Enter';
 
-      // Delete selected rows with back space
+    let selectedRows = params.api.getCellRanges();
 
-      if (isBackspaceKey) {
-        const selectedRows = params.api.getSelectedRows();
-        // console.log(selectedRows, 'selectedRows');
+    let isEditing = params.editing;
 
-        let filtered = rowData.filter((row) => {
-          return selectedRows.indexOf(row) == -1; // filter out selected rows
-        });
+    // toggle shouldBatchUpdate to true here
 
-        // console.log(filtered, 'filtered');
-
-        setRowData(
-          rowData.filter((row) => {
-            return selectedRows.indexOf(row) == -1; // filter out selected rows
-          })
-        );
-
-        return true;
-      }
-
-      // delete range selected cell values
-
-      if (isDeleteKey) {
-        // for each of our range selection
-
-        params.api.getCellRanges().forEach((range) => {
+    if (isEditing) {
+      if (isCtrlKey && isEnterKey) {
+        selectedRows.forEach((range) => {
           let colIds = range.columns.map((col) => col.colId);
 
           let startRowIndex = Math.min(
@@ -92,43 +78,74 @@ const GridExample = () => {
             range.endRow.rowIndex
           );
 
-          clearCells(startRowIndex, endRowIndex, colIds, params.api);
-        });
-      }
+          //send editSelectedCells to oncelleditingstopped
 
-      return false;
+          setUpdatedBatch({
+            startRowIndex: startRowIndex,
+            endRowIndex: endRowIndex,
+            colIds: colIds,
+            gridApi: params.api,
+          });
+        });
+
+        setShouldBatchUpdate(true);
+      }
     }
+  };
+
+  const onCellEditingStopped = (params) => {
+    editValueRef.current = params.newValue;
+    if (shouldBatchUpdate) {
+      editSelectedCells(
+        updatedBatch.startRowIndex,
+        updatedBatch.endRowIndex,
+        updatedBatch.colIds,
+        updatedBatch.gridApi,
+        editValueRef.current
+      );
+
+      setShouldBatchUpdate(false);
+    }
+
+    console.log(updatedBatch, 'updatedBatchState');
   };
 
   const defaultColDef = useMemo(() => {
     return {
       flex: 1,
       minWidth: 100,
+      editable: true,
       suppressKeyboardEvent: onSuppressKeyboardEvent,
     };
   }, []);
 
   const onGridReady = useCallback((params) => {
+    const listener = (event, eventType) => {
+      console.log(event, eventType);
+    };
+    // params.api.addGlobalListener(listener);
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
-
-    fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
-      .then((resp) => resp.json())
-      .then((data) => setRowData(data));
   }, []);
 
   return (
-    <div style={containerStyle}>
-      <div style={gridStyle} className='ag-theme-alpine'>
-        <AgGridReact
-          rowData={rowData}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          enableRangeSelection={true}
-          onGridReady={onGridReady}
-        ></AgGridReact>
+    <>
+      There is {rowData.length} rows
+      <div style={containerStyle}>
+        <div style={gridStyle} className='ag-theme-alpine'>
+          <AgGridReact
+            getRowId={({ data }) => data.id}
+            rowSelection='multiple'
+            rowData={rowData}
+            columnDefs={columnDefs}
+            defaultColDef={defaultColDef}
+            enableRangeSelection
+            onCellEditingStopped={onCellEditingStopped}
+            onGridReady={onGridReady}
+          ></AgGridReact>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
