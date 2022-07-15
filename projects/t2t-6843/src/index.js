@@ -1,27 +1,36 @@
-'use strict';
-
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { render } from 'react-dom';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+import CheckboxRenderer from './CheckboxRenderer';
 
 const GridExample = () => {
   const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
   const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
   const [rowData, setRowData] = useState();
-  const [columnDefs, setColumnDefs] = useState([
+  const [columnDefs] = useState([
     { field: 'athlete', minWidth: 150 },
-    { field: 'age', maxWidth: 90 },
-    { field: 'country', minWidth: 150 },
-    { field: 'year', maxWidth: 90 },
-    { field: 'date', minWidth: 150 },
-    { field: 'sport', minWidth: 150 },
-    { field: 'gold' },
-    { field: 'silver' },
-    { field: 'bronze' },
-    { field: 'total' },
+    {
+      headerName: 'Registered - Checkbox',
+      field: 'registered',
+      cellRenderer: CheckboxRenderer,
+    },
+    {
+      headerName: 'Registered - Boolean',
+      field: 'registered',
+      valueGetter: (params) =>
+        params.data.registered === true ? 'is true' : 'is false',
+    },
+    {
+      headerName: 'POC - false',
+      valueGetter: () => false,
+    },
+    {
+      headerName: 'POC - true',
+      valueGetter: () => true,
+    },
   ]);
   const defaultColDef = useMemo(() => {
     return {
@@ -33,17 +42,26 @@ const GridExample = () => {
   const onGridReady = useCallback((params) => {
     fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
       .then((resp) => resp.json())
-      .then((data) => setRowData(data));
+      .then((data) =>
+        setRowData(
+          data
+            .map((d) => ({
+              ...d,
+              registered: Math.random() < 0.5,
+            }))
+            .slice(0, 3)
+        )
+      );
   }, []);
 
   return (
     <div style={containerStyle}>
-      <div style={gridStyle} className="ag-theme-alpine">
+      <div style={gridStyle} className='ag-theme-alpine'>
         <AgGridReact
           rowData={rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
-          enableRangeSelection={true}
+          enableRangeSelection
           onGridReady={onGridReady}
         ></AgGridReact>
       </div>

@@ -1,0 +1,4 @@
+TICKET="t2t-6857"
+FRAMEWORK="vanilla"
+DOCS_EXAMPLE="range-selection"
+AG_GRID_INSTALLATION_METHOD="packages"

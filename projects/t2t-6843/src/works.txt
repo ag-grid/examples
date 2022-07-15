@@ -1,0 +1,5 @@
+works in vanilla v28 - but not react, looks like its framework specific
+
+
+v25.3 works
+v28 vanilla works
