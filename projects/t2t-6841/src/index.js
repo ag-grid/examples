@@ -20,10 +20,8 @@ const GridExample = () => {
     gridApi: null,
   });
   const editValueRef = useRef('');
-  const [gridApi, setGridApi] = useState(null);
-  const [gridColumnApi, setGridColumnApi] = useState(null);
   const [rowData, setRowData] = useState(data);
-  const [columnDefs, setColumnDefs] = useState([
+  const [columnDefs] = useState([
     { field: 'athlete' },
     { field: 'country' },
     { field: 'age' },
@@ -57,16 +55,11 @@ const GridExample = () => {
   const onSuppressKeyboardEvent = (params) => {
     let isCtrlKey = params.event.ctrlKey;
     let isEnterKey = params.event.key === 'Enter';
-
-    let selectedRows = params.api.getCellRanges();
-
     let isEditing = params.editing;
-
-    // toggle shouldBatchUpdate to true here
 
     if (isEditing) {
       if (isCtrlKey && isEnterKey) {
-        selectedRows.forEach((range) => {
+        params.api.getCellRanges().forEach((range) => {
           let colIds = range.columns.map((col) => col.colId);
 
           let startRowIndex = Math.min(
@@ -78,12 +71,10 @@ const GridExample = () => {
             range.endRow.rowIndex
           );
 
-          //send editSelectedCells to oncelleditingstopped
-
           setUpdatedBatch({
-            startRowIndex: startRowIndex,
-            endRowIndex: endRowIndex,
-            colIds: colIds,
+            startRowIndex,
+            endRowIndex,
+            colIds,
             gridApi: params.api,
           });
         });
@@ -96,18 +87,18 @@ const GridExample = () => {
   const onCellEditingStopped = (params) => {
     editValueRef.current = params.newValue;
     if (shouldBatchUpdate) {
+      const { startRowIndex, endRowIndex, colIds, gridApi } = updatedBatch;
+
       editSelectedCells(
-        updatedBatch.startRowIndex,
-        updatedBatch.endRowIndex,
-        updatedBatch.colIds,
-        updatedBatch.gridApi,
+        startRowIndex,
+        endRowIndex,
+        colIds,
+        gridApi,
         editValueRef.current
       );
 
       setShouldBatchUpdate(false);
     }
-
-    console.log(updatedBatch, 'updatedBatchState');
   };
 
   const defaultColDef = useMemo(() => {
@@ -119,33 +110,21 @@ const GridExample = () => {
     };
   }, []);
 
-  const onGridReady = useCallback((params) => {
-    const listener = (event, eventType) => {
-      console.log(event, eventType);
-    };
-    // params.api.addGlobalListener(listener);
-    setGridApi(params.api);
-    setGridColumnApi(params.columnApi);
-  }, []);
-
   return (
-    <>
-      There is {rowData.length} rows
-      <div style={containerStyle}>
-        <div style={gridStyle} className='ag-theme-alpine'>
-          <AgGridReact
-            getRowId={({ data }) => data.id}
-            rowSelection='multiple'
-            rowData={rowData}
-            columnDefs={columnDefs}
-            defaultColDef={defaultColDef}
-            enableRangeSelection
-            onCellEditingStopped={onCellEditingStopped}
-            onGridReady={onGridReady}
-          ></AgGridReact>
-        </div>
+    <div style={containerStyle}>
+      <div style={gridStyle} className='ag-theme-alpine'>
+        <AgGridReact
+          getRowId={({ data }) => data.id}
+          rowSelection='multiple'
+          rowData={rowData}
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          enableRangeSelection
+          enableCellChangeFlash
+          onCellEditingStopped={onCellEditingStopped}
+        ></AgGridReact>
       </div>
-    </>
+    </div>
   );
 };
 
