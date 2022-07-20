@@ -1,12 +1,5 @@
 
 class CustomGroupRenderer {
-    eGui;
-    eValue;
-    eExpanded;
-    eContracted;
-    params;
-    eContainer;
-    eChildCount;
     init(params) {
         this.params = params;
 
