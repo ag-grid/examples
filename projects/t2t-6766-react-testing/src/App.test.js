@@ -45,7 +45,6 @@ describe('grid functionality', () => {
     // jest.useRealTimers();
   });
   test('Mounting grid should put first cell in focus and edit', () => {
-    console.log('in test edit');
     let cell = screen.getByText('Toyota');
     expect(cell).toBeInTheDocument(); //this is true
     expect(cell).toHaveClass('ag-cell-focus'); //this is false.

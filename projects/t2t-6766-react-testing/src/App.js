@@ -1,14 +1,13 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
+import React, { useState } from 'react'
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import './App.css';
 
-// bug
-
 const App = () => {
     const [gridLoaded, setGridLoaded] = useState(false);
+    const [cellFocused, setCellFocused] = useState(false);
     const columnDefs = [{ field: 'make', editable: true, },
     { field: 'model' },
     { field: 'price' }];
@@ -20,18 +19,19 @@ const App = () => {
     const onGridReady = (params) => {
         setGridLoaded(true);
         console.log('onGridReady');
-        params.api.setFocusedCell({ rowIndex: 0, colKey: 'make' });
-        params.api.startEditingCell({ rowIndex: 0, colKey: 'make' });
-
+        params.api.setFocusedCell(0, 'make', null);
+        // params.api.startEditingCell({ rowIndex: 0, colKey: 'make' });
     }
 
     const onCellFocused = params => {
-        console.log('onCellFocused')
+        console.log('onCellFocused');
+        setCellFocused(true);
     }
 
     return (
         <div>
             <p data-testid="api">{gridLoaded ? 'the grid API has been loaded' : null}</p>
+            <p data-testid="cell-focused-text">{cellFocused ? 'toyota has been focused' : null}</p>
             <div
                 className="ag-theme-balham"
                 style={{
