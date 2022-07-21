@@ -9,6 +9,10 @@
             {
                 "url": "https://www.ag-grid.com/examples/master-detail/simple/packages/angular/app/app.module.ts",
                 "destination": "src/app/app.module.ts"
+            },
+            {
+                "url": "https://www.ag-grid.com/examples/master-detail/simple/packages/angular/app/interfaces.ts",
+                "destination": "src/app/interfaces.ts"
             }
         ],
         "filesToRemoveFromTemplate": [

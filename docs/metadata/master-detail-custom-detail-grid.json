@@ -39,8 +39,12 @@
                 "destination": "src/app/app.component.css"
             },
             {
-                "url": " https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/angular/app/detail-cell-renderer.component.ts",
+                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/angular/app/detail-cell-renderer.component.ts",
                 "destination": "src/app/detail-cell-renderer.component.ts"
+            },
+            {
+                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/angular/app/interfaces.ts",
+                "destination": "src/app/interfaces.ts"
             }
         ],
         "filesToRemoveFromTemplate": [

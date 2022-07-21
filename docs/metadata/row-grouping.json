@@ -25,6 +25,10 @@
             {
                 "url": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/angular/app/app.module.ts",
                 "destination": "src/app/app.module.ts"
+            },
+            {
+                "url": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/angular/app/interfaces.ts",
+                "destination": "src/app/interfaces.ts"
             }
         ],
         "filesToRemoveFromTemplate": [

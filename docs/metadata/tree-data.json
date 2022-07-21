@@ -33,6 +33,10 @@
             {
                 "url": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/angular/styles.css",
                 "destination": "src/app/app.component.css"
+            },
+            {
+                "url": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/angular/app/data.ts",
+                "destination": "src/app/data.ts"
             }
         ],
         "filesToRemoveFromTemplate": [
