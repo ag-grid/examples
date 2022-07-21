@@ -1,6 +1,6 @@
 import "./styles.css";
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import "ag-grid-enterprise";
 import * as agGrid from "ag-grid-community";
 
