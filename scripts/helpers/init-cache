@@ -70,12 +70,20 @@ case "$FRAMEWORK" in
     echo "installing AG Grid dependencies..."
     if [[ $AG_GRID_METHOD == "packages" ]]; then
         cp -r $TEMPLATE_DIR_PATH $PROJECT_DIR_PATH
-        npm i --prefix $PROJECT_DIR_PATH
+        cd $PROJECT_DIR_PATH
+        npm init -y
+        gsed -i 's/"main": "index.js"/"main": "index.html"/; /"test"/ d; /"scripts"/a "start": "parcel index.html --open",\n "build": "parcel build index.html"' package.json
+        npm i -D @babel/core@7.2.0 @babel/preset-env@7.13.8
+        npm i --save ag-grid-community ag-grid-enterprise parcel-bundler@1.6.1
     fi
 
     if [[ $AG_GRID_METHOD == "modules" ]]; then
         cp -r $TEMPLATE_DIR_PATH $PROJECT_DIR_PATH
-        npm i --prefix $PROJECT_DIR_PATH
+        cd $PROJECT_DIR_PATH
+        npm init -y
+        gsed -i 's/"main": "index.js"/"main": "index.html"/; /"test"/ d; /"scripts"/a "start": "parcel index.html --open",\n "build": "parcel build index.html"' package.json
+        npm i -D @babel/core@7.2.0 @babel/preset-env@7.13.8
+        npm i --save parcel-bundler@1.6.1 @ag-grid-community/core @ag-grid-community/client-side-row-model @ag-grid-community/infinite-row-model @ag-grid-community/csv-export @ag-grid-enterprise/core @ag-grid-enterprise/charts @ag-grid-enterprise/sparklines @ag-grid-enterprise/clipboard @ag-grid-enterprise/column-tool-panel @ag-grid-enterprise/excel-export @ag-grid-enterprise/filter-tool-panel @ag-grid-enterprise/master-detail @ag-grid-enterprise/menu @ag-grid-enterprise/range-selection @ag-grid-enterprise/rich-select @ag-grid-enterprise/row-grouping @ag-grid-enterprise/server-side-row-model @ag-grid-enterprise/set-filter @ag-grid-enterprise/multi-filter @ag-grid-enterprise/side-bar @ag-grid-enterprise/status-bar @ag-grid-enterprise/viewport-row-model
     fi
     ;;
 *)
