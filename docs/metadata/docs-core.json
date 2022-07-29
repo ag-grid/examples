@@ -1,0 +1,69 @@
+{
+    "baseURL": {
+        "range-selection": "https://www.ag-grid.com/examples/range-selection/range-selection/packages",
+        "row-grouping": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages",
+        "server-side-row-model": "https://www.ag-grid.com/examples/server-side-model-infinite-scroll/infinite-scroll/packages",
+        "tree-data": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages",
+        "master-detail": "https://www.ag-grid.com/examples/master-detail/simple/packages",
+        "master-detail-custom-detail-grid": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages"
+    },
+    "react": {
+        "frameworkPath": "reactFunctional",
+        "filesToFetch": [
+            {
+                "url": "index.jsx",
+                "destination": "src/index.js"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/App.js",
+            "src/App.css",
+            "src/App.test.js",
+            "src/logo.svg",
+            "src/index.css"
+        ]
+    },
+    "angular": {
+        "frameworkPath": "angular",
+        "filesToFetch": [
+            {
+                "url": "app/app.component.ts",
+                "destination": "src/app/app.component.ts"
+            },
+            {
+                "url": "app/app.module.ts",
+                "destination": "src/app/app.module.ts"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/app/app.component.html",
+            "src/app/app.component.scss"
+        ]
+    },
+    "vue": {
+        "frameworkPath": "vue",
+        "filesToFetch": [
+            {
+                "url": "main.js",
+                "destination": "src/main.js"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/assets",
+            "src/components",
+            "src/App.vue"
+        ]
+    },
+    "vanilla": {
+        "frameworkPath": "vanilla",
+        "filesToFetch": [
+            {
+                "url": "main.js",
+                "destination": "src/index.js"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/styles.css"
+        ]
+    }
+}
