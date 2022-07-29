@@ -1,65 +1,19 @@
 {
     "react": {
-        "indexHTML": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/reactFunctional/index.html",
-        "filesToFetch": [
-            {
-                "url": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/reactFunctional/index.jsx",
-                "destination": "src/index.js"
-            }
-        ],
-        "filesToRemoveFromTemplate": [
-            "src/App.js",
-            "src/App.css",
-            "src/App.test.js",
-            "src/logo.svg",
-            "src/index.css"
-        ]
+        "filesToFetch": []
     },
     "angular": {
-        "indexHTML": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/angular/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/angular/app/app.component.ts",
-                "destination": "src/app/app.component.ts"
-            },
-            {
-                "url": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/angular/app/app.module.ts",
-                "destination": "src/app/app.module.ts"
-            },
-            {
-                "url": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/angular/app/interfaces.ts",
+                "url": "app/interfaces.ts",
                 "destination": "src/app/interfaces.ts"
             }
-        ],
-        "filesToRemoveFromTemplate": [
-            "src/app/app.component.html",
-            "src/app/app.component.scss"
         ]
     },
     "vue": {
-        "indexHTML": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/vue/index.html",
-        "filesToFetch": [
-            {
-                "url": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/vue/main.js",
-                "destination": "src/main.js"
-            }
-        ],
-        "filesToRemoveFromTemplate": [
-            "src/assets",
-            "src/components",
-            "src/App.vue"
-        ]
+        "filesToFetch": []
     },
     "vanilla": {
-        "indexHTML": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/vanilla/index.html",
-        "filesToFetch": [
-            {
-                "url": "https://www.ag-grid.com/examples/grouping/default-row-grouping/packages/vanilla/main.js",
-                "destination": "src/index.js"
-            }
-        ],
-        "filesToRemoveFromTemplate": [
-            "src/styles.css"
-        ]
+        "filesToFetch": []
     }
 }
