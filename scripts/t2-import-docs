@@ -40,25 +40,50 @@ echo "importing [$DOCS_EXAMPLE][$FRAMEWORK] example from the AG Grid docs..."
 
 # fetch DOCS_EXAMPLE metadata from t2/docs/metadata directory
 T2_DOCS_METADATA_DIR_PATH="$T2_HOME/docs/metadata"
+T2_DOCS_CORE="$T2_HOME/docs/metadata/docs-core.json"
+
+# returns the framework path for a given framework, e.g. react can be react or reactFunctional
+DOCS_FRAMEWORK_PATH=$(jq -c .$FRAMEWORK'.frameworkPath' $T2_DOCS_CORE)
+
+# get the base URL for the doc example
+DOCS_BASE_URL=$(jq -c '.baseURL'.\""$DOCS_EXAMPLE"\" $T2_DOCS_CORE)
+
+# remove beginning and end quotation marks
+DOCS_FRAMEWORK_PATH=$(gsed -e 's/^"//;s/"$//' <<<$DOCS_FRAMEWORK_PATH)
+DOCS_BASE_URL=$(gsed -e 's/^"//;s/"$//' <<<$DOCS_BASE_URL)
+
+# change to modules link if necessary
+if [ $AG_GRID_INSTALLATION_METHOD == "modules" ]; then
+    DOCS_BASE_URL=$(gsed -e 's/\/packages/\/modules/g' <<<$DOCS_BASE_URL)
+fi
+
+DOCS_BASE_URL="$DOCS_BASE_URL/$DOCS_FRAMEWORK_PATH"
 
 # install jq
 # https://stedolan.github.io/jq/
 
-# iterate over filesToFetch and import them into project
-jq -c .$FRAMEWORK'.filesToFetch[]' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
-    # do stuff with $i
-    docs_url=$(echo "$i" | jq -r '.url')
-    if [ $AG_GRID_INSTALLATION_METHOD == "modules" ]; then
-        docs_url=$(echo "$docs_url" | gsed -e 's/\/packages\//\/modules\//g' )
-    fi
+# fetch files from core
+jq -c .$FRAMEWORK'.filesToFetch[]' $T2_DOCS_CORE | while read i; do
+    file=$(echo "$i" | jq -r '.url')
+    docs_url="$DOCS_BASE_URL/$file"
     destination=$(echo "$i" | jq -r '.destination')
+
     echo "$docs_url > $destination"
     # fetch and import
     curl -o $destination $docs_url
 done
 
+# fetch files for specific example
+jq -c .$FRAMEWORK'.filesToFetch[]' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+    file=$(echo "$i" | jq -r '.url')
+    docs_url="$DOCS_BASE_URL/$file"
+    destination=$(echo "$i" | jq -r '.destination')
+    echo "$docs_url > $destination"
+    curl -o $destination $docs_url
+done
+
 # iterate over filesToRemoveFromTemplate and delete them
-jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[] | .' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[] | .' $T2_DOCS_CORE | while read i; do
     # do stuff with $i
     fileToDelete=$(echo "$i" | jq -r)
     # delete file
@@ -66,42 +91,39 @@ jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[] | .' $T2_DOCS_METADATA_DIR_PATH/$
     rm -rf $PWD/$fileToDelete
 done
 
-# inject CSS
 # inject style tags from the docs example's index.html into the project
 echo 'injecting page styles...'
+
 # first fetch the projects index.html file
-jq -c .$FRAMEWORK'.indexHTML' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
-    # create an temporary HTML file where we will output the fetched index.html file
-    URL=$(echo "$i" | jq -r)
-    if [ $AG_GRID_INSTALLATION_METHOD == "modules" ]; then
-        URL=$(echo "$URL" | gsed -e 's/\/packages\//\/modules\//g' )
-    fi
-    curl -o tmp.html $URL
-    # match the <style></style> tags and store them in a variable
-    PAGE_STYLES=$(gsed -n "/<style.*/,/<\/style>/p" tmp.html)
+html_file="$DOCS_BASE_URL/index.html"
 
-    # inject into projects index.html file
-    case "$FRAMEWORK" in
-    'angular')
-        gsed -i "/<\/head>/i $(echo $PAGE_STYLES)" "$PWD/src/index.html"
-        ;;
-    'react')
-        gsed -i "/<\/head>/i $(echo $PAGE_STYLES)" "$PWD/public/index.html"
-        ;;
-    'vue')
-        gsed -i "/<\/head>/i $(echo $PAGE_STYLES)" "$PWD/public/index.html"
-        ;;
-    'vanilla')
-        gsed -i "/<\/head>/i $(echo $PAGE_STYLES)" "$PWD/index.html"
-        ;;
-    *)
-        echo "Could not inject stylesheets"
-        ;;
-    esac
+# create an temporary HTML file where we will output the fetched index.html file
+curl -o tmp.html $html_file
 
-    # delete temporary HTML file
-    rm -rf $PWD/tmp.html
-done
+# match the <style></style> tags and store them in a variable
+PAGE_STYLES=$(gsed -n "/<style.*/,/<\/style>/p" tmp.html)
+
+# inject into projects index.html file
+case "$FRAMEWORK" in
+'angular')
+    gsed -i "/<\/head>/i $(echo $PAGE_STYLES)" "$PWD/src/index.html"
+    ;;
+'react')
+    gsed -i "/<\/head>/i $(echo $PAGE_STYLES)" "$PWD/public/index.html"
+    ;;
+'vue')
+    gsed -i "/<\/head>/i $(echo $PAGE_STYLES)" "$PWD/public/index.html"
+    ;;
+'vanilla')
+    gsed -i "/<\/head>/i $(echo $PAGE_STYLES)" "$PWD/index.html"
+    ;;
+*)
+    echo "Could not inject stylesheets"
+    ;;
+esac
+
+# delete temporary HTML file
+rm -rf $PWD/tmp.html
 
 # ***************************************************
 # ******** FRAMEWORK SPECIFIC MODIFICATIONS *********
@@ -187,8 +209,8 @@ if [[ $DOCS_EXAMPLE == "tree-data" ]]; then
         gsed -i "/selector: 'my-app'/a $TREE_DATA_STYLE_IMPORTS" "$PWD/src/app/app.component.ts"
         ;;
     'react')
-        TREE_DATA_STYLE_IMPORTS="import './style.css'"
-        gsed -i "8a $TREE_DATA_STYLE_IMPORTS" "$PWD/src/index.js"
+        # TREE_DATA_STYLE_IMPORTS="import './style.css'"
+        # gsed -i "8a $TREE_DATA_STYLE_IMPORTS" "$PWD/src/index.js"
         ;;
     'vue')
         TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
