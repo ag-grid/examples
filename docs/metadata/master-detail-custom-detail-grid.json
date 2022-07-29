@@ -1,93 +1,54 @@
 {
     "react": {
-        "indexHTML": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/reactFunctional/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/reactFunctional/index.jsx",
-                "destination": "src/index.js"
-            },
-            {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/reactFunctional/styles.css",
+                "url": "styles.css",
                 "destination": "src/styles.css"
             },
             {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/reactFunctional/detailCellRenderer.jsx",
+                "url": "detailCellRenderer.jsx",
                 "destination": "src/detailCellRenderer.jsx"
             }
-        ],
-        "filesToRemoveFromTemplate": [
-            "src/App.js",
-            "src/App.css",
-            "src/App.test.js",
-            "src/logo.svg",
-            "src/index.css"
         ]
     },
     "angular": {
-        "indexHTML": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/angular/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/angular/app/app.component.ts",
-                "destination": "src/app/app.component.ts"
-            },
-            {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/angular/app/app.module.ts",
-                "destination": "src/app/app.module.ts"
-            },
-            {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/angular/styles.css",
+                "url": "styles.css",
                 "destination": "src/app/app.component.css"
             },
             {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/angular/app/detail-cell-renderer.component.ts",
+                "url": "app/detail-cell-renderer.component.ts",
                 "destination": "src/app/detail-cell-renderer.component.ts"
             },
             {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/angular/app/interfaces.ts",
+                "url": "app/interfaces.ts",
                 "destination": "src/app/interfaces.ts"
             }
-        ],
-        "filesToRemoveFromTemplate": [
-            "src/app/app.component.html",
-            "src/app/app.component.scss"
         ]
     },
     "vue": {
-        "indexHTML": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/vue/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/vue/main.js",
-                "destination": "src/main.js"
-            },
-            {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/vue/styles.css",
+                "url": "styles.css",
                 "destination": "public/styles.css"
             },
             {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/vue/detailCellRendererVue.js",
+                "url": "detailCellRendererVue.js",
                 "destination": "src/detailCellRendererVue.js"
             }
-        ],
-        "filesToRemoveFromTemplate": [
-            "src/assets",
-            "src/components",
-            "src/App.vue"
         ]
     },
     "vanilla": {
-        "indexHTML": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/vanilla/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/vanilla/main.js",
-                "destination": "src/index.js"
+                "url":"detailCellRenderer.js",
+                "destination":"detailCellRenderer.js"
             },
             {
-                "url": "https://www.ag-grid.com/examples/master-detail-custom-detail/custom-detail-with-grid/packages/vanilla/styles.css",
+                "url": "styles.css",
                 "destination": "styles.css"
             }
-        ],
-        "filesToRemoveFromTemplate": [
-            "src/styles.css"
         ]
     }
 }
